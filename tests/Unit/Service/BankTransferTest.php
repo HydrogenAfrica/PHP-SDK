@@ -3,7 +3,7 @@
 namespace Unit\Service;
 
 use HydrogenpayAfrica\Test\Resources\Setup\Config;
-use HydrogenpayAfrica\HydrogenAfrica;
+use HydrogenpayAfrica\HydrogenpayAfrica;
 use HydrogenpayAfrica\Util\AuthMode;
 use PHPUnit\Framework\TestCase;
 use HydrogenpayAfrica\Util\Currency;

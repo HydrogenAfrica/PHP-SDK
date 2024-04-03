@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica;
+namespace HydrogenpayAfrica;
 
 use HydrogenpayAfrica\Config\ForkConfig;
 use HydrogenpayAfrica\EventHandlers\EventHandlerInterface;
@@ -18,7 +18,7 @@ define('FLW_PHP_ASSET_DIR', __DIR__ . '../assets/');
 /**
  * Hydrogenpay PHP SDK
  *
- * @author HydrogenAfrica Developers <developers@hydrogenpay.com>
+ * @author HydrogenpayAfrica Developers <developers@hydrogenpay.com>
  *
  * @version 1.0
  */

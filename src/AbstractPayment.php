@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica;
+namespace HydrogenpayAfrica;
 
 use HydrogenpayAfrica\Contract\ConfigInterface;
 use HydrogenpayAfrica\EventHandlers\EventHandlerInterface;
