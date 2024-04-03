@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Helper;
+namespace HydrogenpayAfrica\Helper;
 
-use HydrogenAfrica\Contract\ConfigInterface;
+use HydrogenpayAfrica\Contract\ConfigInterface;
 use GuzzleHttp\Client;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
@@ -17,7 +17,7 @@ use function is_null;
 /**
  * Class Payload.
  *
- * @deprecated use \HydrogenAfrica\Config\PackageConfig instead
+ * @deprecated use \HydrogenpayAfrica\Config\PackageConfig instead
  */
 class Config implements ConfigInterface
 {
@@ -25,7 +25,7 @@ class Config implements ConfigInterface
     public const TEST_AUTH_TOKEN = 'TEST_AUTH_TOKEN';
     public const MODE = 'MODE';
     public const DEFAULT_PREFIX = 'HY|PHP';
-    public const LOG_FILE_NAME = 'hydrogen-php.log';
+    public const LOG_FILE_NAME = 'hydrogenpay-php.log';
     protected Logger $logger;
     private string $secret;
     private string $public;
@@ -45,7 +45,7 @@ class Config implements ConfigInterface
         // when creating a custom config, you may choose to use other dependencies here.
         // http-client - Guzzle, logger - Monolog.
         $this->http = new Client(['base_uri' => EnvVariables::BASE_URL, 'timeout' => 60 ]);
-        $log = new Logger('HydrogenAfrica/PHP');
+        $log = new Logger('HydrogenpayAfrica/PHP');
         $this->logger = $log;
         $log->pushHandler(new RotatingFileHandler(__DIR__ . "../../../../../../" . self::LOG_FILE_NAME, 90));
     }

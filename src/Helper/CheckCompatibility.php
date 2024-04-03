@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Helper;
+namespace HydrogenpayAfrica\Helper;
 
 class CheckCompatibility
 {

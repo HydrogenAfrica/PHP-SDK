@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Service;
+namespace HydrogenpayAfrica\Service;
 
-use HydrogenAfrica\Contract\ConfigInterface;
-use HydrogenAfrica\Contract\Payment;
-use HydrogenAfrica\EventHandlers\TkEventHandler;
-use HydrogenAfrica\Traits\Group\Charge;
+use HydrogenpayAfrica\Contract\ConfigInterface;
+use HydrogenpayAfrica\Contract\Payment;
+use HydrogenpayAfrica\EventHandlers\TkEventHandler;
+use HydrogenpayAfrica\Traits\Group\Charge;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class TokenizedCharge extends Service implements Payment
@@ -28,7 +28,7 @@ class TokenizedCharge extends Service implements Payment
     /**
      * @throws ClientExceptionInterface
      */
-    public function initiate(\HydrogenAfrica\Entities\Payload $payload): array
+    public function initiate(\HydrogenpayAfrica\Entities\Payload $payload): array
     {
         $this->logger->notice('Tokenize Service::Initiating Card Payment...');
         if (! $this->checkPayloadIsValid($payload, 'token')) {
@@ -44,7 +44,7 @@ class TokenizedCharge extends Service implements Payment
     /**
      * @throws ClientExceptionInterface
      */
-    public function charge(\HydrogenAfrica\Entities\Payload $payload): array
+    public function charge(\HydrogenpayAfrica\Entities\Payload $payload): array
     {
         // format the customer object to extract the first_name and the last name.
         $customer = $payload->get('customer')->toArray();

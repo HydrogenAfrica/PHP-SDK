@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\EventHandlers;
+namespace HydrogenpayAfrica\EventHandlers;
 
 // Prevent direct access to this class
 //defined('BASEPATH') OR exit('No direct script access allowed');
@@ -22,14 +22,14 @@ interface EventHandlerInterface
     /**
      * This is called only when a transaction is successful
      *
-     * @param object $transactionData This is the transaction data as returned from the Hydrogen payment gateway
+     * @param object $transactionData This is the transaction data as returned from the Hydrogenpay payment gateway
      * */
     public function onSuccessful(object $transactionData): void;
 
     /**
      * This is called only when a transaction failed
      *
-     * @param object $transactionData This is the transaction data as returned from the Hydrogen payment gateway
+     * @param object $transactionData This is the transaction data as returned from the Hydrogenpay payment gateway
      * */
     public function onFailure(object $transactionData): void;
 

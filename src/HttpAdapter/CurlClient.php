@@ -1,6 +1,6 @@
 <?php
 
-namespace HydrogenAfrica\Adapter;
+namespace HydrogenpayAfrica\Adapter;
 
 use Psr\Http\Message\ResponseFactoryInterface;
 

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace HydrogenAfrica\Config;
 
-use HydrogenAfrica\EventHandlers\EventHandlerInterface;
-use HydrogenAfrica\HydrogenAfrica;
-use HydrogenAfrica\Contract\ConfigInterface;
+use HydrogenpayAfrica\EventHandlers\EventHandlerInterface;
+use HydrogenpayAfrica\HydrogenpayAfrica;
+use HydrogenpayAfrica\Contract\ConfigInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Log\LoggerInterface;
 use Monolog\Logger;
 use Monolog\Handler\RotatingFileHandler;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
-use HydrogenAfrica\Helper\EnvVariables;
+use HydrogenpayAfrica\Helper\EnvVariables;
 
 abstract class AbstractConfig
 {
@@ -22,7 +22,7 @@ abstract class AbstractConfig
     // public const ENCRYPTION_KEY = 'ENCRYPTION_KEY';
     public const MODE = 'MODE';
     public const DEFAULT_PREFIX = 'HY|PHP';
-    public const LOG_FILE_NAME = 'hydrogen-php.log';
+    public const LOG_FILE_NAME = 'hydrogenpay-php.log';
     protected Logger $logger;
     protected string $secret;
     protected string $public;
@@ -49,7 +49,7 @@ abstract class AbstractConfig
             ]
         );
 
-        $log = new Logger('HydrogenAfrica/PHP');
+        $log = new Logger('HydrogenpayAfrica/PHP');
         $this->logger = $log;
     }
 

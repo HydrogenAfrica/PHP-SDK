@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Helper;
+namespace HydrogenpayAfrica\Helper;
 
 final class Base
 {

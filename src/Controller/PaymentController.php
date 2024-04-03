@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Controller;
+namespace HydrogenpayAfrica\Controller;
 
-use HydrogenAfrica\EventHandlers\ModalEventHandler;
-use HydrogenAfrica\EventHandlers\EventHandlerInterface;
-use HydrogenAfrica\HydrogenAfrica;
-use HydrogenAfrica\Entities\Payload;
-use HydrogenAfrica\Library\Modal;
-use HydrogenAfrica\Service\Transactions;
+use HydrogenpayAfrica\EventHandlers\ModalEventHandler;
+use HydrogenpayAfrica\EventHandlers\EventHandlerInterface;
+use HydrogenpayAfrica\HydrogenpayAfrica;
+use HydrogenpayAfrica\Entities\Payload;
+use HydrogenpayAfrica\Library\Modal;
+use HydrogenpayAfrica\Service\Transactions;
 
 final class PaymentController
 {
     private string $requestMethod;
 
     private EventHandlerInterface $handler;
-    private HydrogenAfrica $client;
+    private HydrogenpayAfrica $client;
     private string $modalType;
 
     protected array $routes = [
@@ -25,11 +25,11 @@ final class PaymentController
     ];
 
     public function __construct(
-        HydrogenAfrica $client,
+        HydrogenpayAfrica $client,
         EventHandlerInterface $handler,
         string $modalType
     ) {
-        HydrogenAfrica::bootstrap();
+        HydrogenpayAfrica::bootstrap();
         $this->requestMethod =  $this->getRequestMethod();
         $this->handler = $handler;
         $this->client = $client;

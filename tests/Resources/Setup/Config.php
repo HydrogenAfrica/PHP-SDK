@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Test\Resources\Setup;
+namespace HydrogenpayAfrica\Test\Resources\Setup;
 
-use HydrogenAfrica\Contract\ConfigInterface;
-use HydrogenAfrica\Helper\EnvVariables;
+use HydrogenpayAfrica\Contract\ConfigInterface;
+use HydrogenpayAfrica\Helper\EnvVariables;
 use GuzzleHttp\Client;
 
 use function is_null;
@@ -21,7 +21,7 @@ class Config implements ConfigInterface
     public const ENCRYPTION_KEY = 'ENCRYPTION_KEY';
     public const ENV = 'ENV';
     public const DEFAULT_PREFIX = 'FW|PHP';
-    public const LOG_FILE_NAME = 'hydrogen-php.log';
+    public const LOG_FILE_NAME = 'hydrogenpay-php.log';
     protected Logger $logger;
     private string $secret;
     private string $public;
@@ -45,7 +45,7 @@ class Config implements ConfigInterface
         # when creating a custom config, you may choose to use other dependencies here.
         # http-client - Guzzle, logger - Monolog.
         $this->http = new Client(['base_uri' => EnvVariables::BASE_URL, 'timeout' => 60 ]);
-        $log = new Logger('HydrogenAfrica/PHP'); // making use of Monolog;
+        $log = new Logger('HydrogenpayAfrica/PHP'); // making use of Monolog;
         $this->logger = $log;
         $log->pushHandler(new RotatingFileHandler(self::LOG_FILE_NAME, 90));
     }

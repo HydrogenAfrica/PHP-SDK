@@ -1,9 +1,9 @@
 <?php
 
-namespace HydrogenAfrica\Entities;
+namespace HydrogenpayAfrica\Entities;
 
-use HydrogenAfrica\Util\AuthMode;
-use HydrogenAfrica\Contract\EntityInterface;
+use HydrogenpayAfrica\Util\AuthMode;
+use HydrogenpayAfrica\Contract\EntityInterface;
 
 class Payload implements EntityInterface
 {

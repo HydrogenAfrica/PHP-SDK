@@ -1,6 +1,6 @@
 <?php
 
-namespace HydrogenAfrica\Exception;
+namespace HydrogenpayAfrica\Exception;
 
 use Psr\Http\Client\ClientExceptionInterface;
 

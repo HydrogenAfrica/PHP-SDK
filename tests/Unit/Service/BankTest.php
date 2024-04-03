@@ -2,9 +2,9 @@
 
 namespace Unit\Service;
 
-use HydrogenAfrica\Service\Banks;
+use HydrogenpayAfrica\Service\Banks;
 use PHPUnit\Framework\TestCase;
-use HydrogenAfrica\Test\Resources\Setup\Config;
+use HydrogenpayAfrica\Test\Resources\Setup\Config;
 
 class BankTest extends TestCase
 {

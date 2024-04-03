@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Service;
+namespace HydrogenpayAfrica\Service;
 
 use Exception;
-use HydrogenAfrica\Contract\ConfigInterface;
-use HydrogenAfrica\Contract\Payment;
-use HydrogenAfrica\EventHandlers\BankTransferEventHandler;
-use HydrogenAfrica\Entities\Payload;
-use HydrogenAfrica\Traits\Group\Charge;
+use HydrogenpayAfrica\Contract\ConfigInterface;
+use HydrogenpayAfrica\Contract\Payment;
+use HydrogenpayAfrica\EventHandlers\BankTransferEventHandler;
+use HydrogenpayAfrica\Entities\Payload;
+use HydrogenpayAfrica\Traits\Group\Charge;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Client\ClientExceptionInterface;
 use stdClass;

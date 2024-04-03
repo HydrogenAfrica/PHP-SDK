@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Service;
+namespace HydrogenpayAfrica\Service;
 
-use HydrogenAfrica\Contract\ConfigInterface;
-use HydrogenAfrica\Contract\FactoryInterface;
-use HydrogenAfrica\Contract\ServiceInterface;
-use HydrogenAfrica\Config\ForkConfig;
-use HydrogenAfrica\Factories\CustomerFactory as Customer;
-use HydrogenAfrica\Factories\PayloadFactory as Payload;
-use HydrogenAfrica\Helper\Config;
-use HydrogenAfrica\Helper\EnvVariables;
+use HydrogenpayAfrica\Contract\ConfigInterface;
+use HydrogenpayAfrica\Contract\FactoryInterface;
+use HydrogenpayAfrica\Contract\ServiceInterface;
+use HydrogenpayAfrica\Config\ForkConfig;
+use HydrogenpayAfrica\Factories\CustomerFactory as Customer;
+use HydrogenpayAfrica\Factories\PayloadFactory as Payload;
+use HydrogenpayAfrica\Helper\Config;
+use HydrogenpayAfrica\Helper\EnvVariables;
 use Psr\Http\Client\ClientInterface;
 use InvalidArgumentException;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -75,7 +75,7 @@ class Service implements ServiceInterface
         $modeTest = $this->config->getSecretKey();
         $modeLive = $this->config->getPublicKey();
         $payload_hash = $data['payload_hash']; // Assuming 'payload_hash' is part of the $data array
-        $hydrogen_url = $data['payload_url'];
+        $hydrogenpay_url = $data['payload_url'];
         $verifyTestUrl = EnvVariables::VERIFY_TEST_PAY;
         $verifyLiveUrl = EnvVariables::VERIFY_LIVE_PAY;
 
@@ -86,7 +86,7 @@ class Service implements ServiceInterface
                 $response = $this->http->request(
                     // 'POST', $url, [
                     'POST',
-                    $hydrogen_url,
+                    $hydrogenpay_url,
                     [
                         'debug' => false,
                         'headers' => [
@@ -187,7 +187,7 @@ class Service implements ServiceInterface
         if (is_null($config)) {
             include __DIR__ . '/../../setup.php';
 
-            if ('composer' === $hydrogen_installation) {
+            if ('composer' === $hydrogenpay_installation) {
                 $config = Config::setUp(
                     $keys[Config::TEST_AUTH_TOKEN],
                     $keys[Config::LIVE_AUTH_TOKEN],
@@ -195,7 +195,7 @@ class Service implements ServiceInterface
                 );
             }
 
-            if ('manual' === $hydrogen_installation) {
+            if ('manual' === $hydrogenpay_installation) {
                 $config = ForkConfig::setUp(
                     $keys[Config::TEST_AUTH_TOKEN],
                     $keys[Config::LIVE_AUTH_TOKEN],

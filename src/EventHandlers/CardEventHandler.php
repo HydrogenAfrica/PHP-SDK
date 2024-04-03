@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\EventHandlers;
+namespace HydrogenpayAfrica\EventHandlers;
 
-use HydrogenAfrica\Contract\ConfigInterface;
-use HydrogenAfrica\Util\AuthMode;
+use HydrogenpayAfrica\Contract\ConfigInterface;
+use HydrogenpayAfrica\Util\AuthMode;
 
 class CardEventHandler implements EventHandlerInterface
 {
@@ -85,7 +85,7 @@ class CardEventHandler implements EventHandlerInterface
     {
         // Get the transaction from your DB using the transaction reference (txref)
         // Queue it for requery. Preferably using a queue system. The requery should be about 15 minutes after.
-        // Ask the customer to contact your support and you should escalate this issue to the hydrogen support team. Send this as an email and as a notification on the page. just incase the page timesout or disconnects
+        // Ask the customer to contact your support and you should escalate this issue to the hydrogenpay support team. Send this as an email and as a notification on the page. just incase the page timesout or disconnects
     }
 
     /**

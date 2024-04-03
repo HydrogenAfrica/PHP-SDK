@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica;
+namespace HydrogenpayAfrica;
 
 /**
  * Class Customer
  *
- * @package    HydrogenAfrica
- * @deprecated Use HydrogenAfrica\Entities\Customer instead.
+ * @package    HydrogenpayAfrica
+ * @deprecated Use HydrogenpayAfrica\Entities\Customer instead.
  */
 class Customer
 {
     private Entities\Customer $instance;
     public function __construct(array $data = [])
     {
-        $this->instance = new \HydrogenAfrica\Entities\Customer($data);
+        $this->instance = new \HydrogenpayAfrica\Entities\Customer($data);
     }
 
     public function get(string $param)

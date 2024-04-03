@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Service;
+namespace HydrogenpayAfrica\Service;
 
-use HydrogenAfrica\Contract\ConfigInterface;
-use HydrogenAfrica\EventHandlers\EventTracker;
+use HydrogenpayAfrica\Contract\ConfigInterface;
+use HydrogenpayAfrica\EventHandlers\EventTracker;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class Otps extends Service
@@ -22,7 +22,7 @@ class Otps extends Service
     /**
      * @throws ClientExceptionInterface
      */
-    public function create(\HydrogenAfrica\Payload $payload): \stdClass
+    public function create(\HydrogenpayAfrica\Payload $payload): \stdClass
     {
         $this->checkPayloadOTP($payload);
 
@@ -35,7 +35,7 @@ class Otps extends Service
                 'email' => $payload['email'],
                 'phone' => $payload['phone_number'],
             ],
-            'sender' => $payload['sender'] ?? 'Hydrogen-PHP',
+            'sender' => $payload['sender'] ?? 'Hydrogenpay-PHP',
             'send' => $payload['send'] ?? false,
             'medium' => $payload['medium'] ?? ['sms', 'whatsapp'],
         ];
@@ -69,7 +69,7 @@ class Otps extends Service
         return $response;
     }
 
-    private function checkPayloadOTP(\HydrogenAfrica\Payload $payload): void
+    private function checkPayloadOTP(\HydrogenpayAfrica\Payload $payload): void
     {
         if (! $payload->has('length')) {
             throw new \InvalidArgumentException(

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Enum;
+namespace HydrogenpayAfrica\Enum;
 
 //use Cerbero\Enum\Concerns\Enumerates;
 

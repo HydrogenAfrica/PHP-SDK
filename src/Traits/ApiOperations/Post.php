@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Traits\ApiOperations;
+namespace HydrogenpayAfrica\Traits\ApiOperations;
 
-use HydrogenAfrica\Contract\ConfigInterface;
-use HydrogenAfrica\Service\Service as Http;
+use HydrogenpayAfrica\Contract\ConfigInterface;
+use HydrogenpayAfrica\Service\Service as Http;
 use Psr\Http\Client\ClientExceptionInterface;
 
 

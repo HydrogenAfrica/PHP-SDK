@@ -1,6 +1,6 @@
 <?php
 
-namespace HydrogenAfrica\Contract;
+namespace HydrogenpayAfrica\Contract;
 
 interface FactoryInterface
 {

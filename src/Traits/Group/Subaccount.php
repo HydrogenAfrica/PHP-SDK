@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Traits\Group;
+namespace HydrogenpayAfrica\Traits\Group;
 
 trait Subaccount
 {

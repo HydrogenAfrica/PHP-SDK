@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Traits\Setup;
+namespace HydrogenpayAfrica\Traits\Setup;
 
-use HydrogenAfrica\Contract\ConfigInterface;
-use HydrogenAfrica\Helper\Config;
-use HydrogenAfrica\Config\ForkConfig;
+use HydrogenpayAfrica\Contract\ConfigInterface;
+use HydrogenpayAfrica\Helper\Config;
+use HydrogenpayAfrica\Config\ForkConfig;
 
 trait Configure
 {
@@ -15,7 +15,7 @@ trait Configure
         if (\is_null($config)) {
             include __DIR__ . '/../../../setup.php';
 
-            if ('composer' === $hydrogen_installation) {
+            if ('composer' === $hydrogenpay_installation) {
                 $config = Config::setUp(
                     $keys[Config::TEST_AUTH_TOKEN],
                     $keys[Config::LIVE_AUTH_TOKEN],
@@ -23,7 +23,7 @@ trait Configure
                 );
             }
 
-            if ('manual' === $hydrogen_installation) {
+            if ('manual' === $hydrogenpay_installation) {
                 $config = ForkConfig::setUp(
                     $keys[ForkConfig::TEST_AUTH_TOKEN],
                     $keys[ForkConfig::LIVE_AUTH_TOKEN],

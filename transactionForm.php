@@ -33,30 +33,30 @@
         <form action="processTransaction.php" method="POST" class="mt-3">
             <div class="mb-3">
                 <label for="customerName" class="form-label">Customer Name</label>
-                <input type="text" class="form-control" id="customerName" name="customerName" required>
+                <input type="text" class="form-control" id="customerName" name="customerName">
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Customer Email</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <input type="email" class="form-control" id="email" name="email">
             </div>
             <div class="mb-3">
                 <label for="amount" class="form-label">Amount</label>
-                <input type="number" class="form-control" id="amount" name="amount" required>
+                <input type="number" class="form-control" id="amount" name="amount">
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Payment Description</label>
-                <input type="text" class="form-control" id="description" name="description" required>
+                <input type="text" class="form-control" id="description" name="description">
             </div>
             <div class="mb-3">
                 <label for="meta" class="form-label">Other Information</label>
-                <input type="text" class="form-control" id="meta" name="meta" required>
+                <input type="text" class="form-control" id="meta" name="meta">
             </div>
 
-            <input type="hidden" name="callback" value="http://hydrogen_php_sdk.test/processTransaction.php">
+            <input type="hidden" name="callback" value="http://hydrogenpay_php_sdk.test/processTransaction.php">
 
-            <input type="hidden" name="success_url" value="http://hydrogen_php_sdk.test/processTransaction.php?status=success">
+            <input type="hidden" name="success_url" value="http://hydrogenpay_php_sdk.test/processTransaction.php?status=success">
 
-            <input type="hidden" name="failure_url" value="http://hydrogen_php_sdk.test/processTransaction.php?status=failed">
+            <input type="hidden" name="failure_url" value="http://hydrogenpay_php_sdk.test/processTransaction.php?status=failed">
 
             <button type="submit" class="btn btn-primary" name="processPayment">Send Payment</button>
         </form>

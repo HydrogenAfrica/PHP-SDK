@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\EventHandlers;
+namespace HydrogenpayAfrica\EventHandlers;
 
 class ModalEventHandler implements EventHandlerInterface
 {
@@ -60,9 +60,9 @@ class ModalEventHandler implements EventHandlerInterface
      * */
     public function onRequeryError($requeryResponse): void
     {
-        echo "HydrogenAfrica: error querying the transaction.";
-        // trigger webhook notification from Hydrogen.
-        $service = new HydrogenAfrica\Service\Transaction();
+        echo "HydrogenpayAfrica: error querying the transaction.";
+        // trigger webhook notification from Hydrogenpay.
+        $service = new HydrogenpayAfrica\Service\Transaction();
         $service->resendFailedHooks($data->id);
         header('Location: ' . $_SERVER['HTTP_ORIGIN']);
     }
@@ -83,8 +83,8 @@ class ModalEventHandler implements EventHandlerInterface
      * */
     public function onTimeout($transactionReference, $data): void
     {
-        // trigger webhook notification from Hydrogen.
-        $service = new HydrogenAfrica\Service\Transaction();
+        // trigger webhook notification from Hydrogenpay.
+        $service = new HydrogenpayAfrica\Service\Transaction();
         $service->resendFailedHooks($data->id);
         header('Location: ' . $_SERVER['HOST']);
     }

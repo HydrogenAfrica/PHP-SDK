@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Exception;
+namespace HydrogenpayAfrica\Exception;
 
 use Psr\Http\Client\ClientExceptionInterface;
 

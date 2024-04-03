@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Service;
+namespace HydrogenpayAfrica\Service;
 
-use HydrogenAfrica\Factories\PayloadFactory as Factory;
+use HydrogenpayAfrica\Factories\PayloadFactory as Factory;
 
 /**
  * Class Payload.
  *
- * @deprecated use \HydrogenAfrica\Factories\PayloadFactory instead
+ * @deprecated use \HydrogenpayAfrica\Factories\PayloadFactory instead
  */
 class Payload
 {
@@ -19,7 +19,7 @@ class Payload
         $this->payloadFactory = new Factory();
     }
 
-    public function create(array $data): \HydrogenAfrica\Entities\Payload
+    public function create(array $data): \HydrogenpayAfrica\Entities\Payload
     {
         return $this->payloadFactory->create($data);
     }

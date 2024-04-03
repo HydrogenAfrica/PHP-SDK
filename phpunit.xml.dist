@@ -11,7 +11,7 @@
          stopOnFailure="false">
         
 <testsuites>
-    <testsuite name="Hydrogen Tests">
+    <testsuite name="Hydrogenpay Tests">
         <directory suffix=".php">tests</directory>
     </testsuite>
 </testsuites>

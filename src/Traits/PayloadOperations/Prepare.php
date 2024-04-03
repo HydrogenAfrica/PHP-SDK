@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Traits\PayloadOperations;
+namespace HydrogenpayAfrica\Traits\PayloadOperations;
 
-use HydrogenAfrica\AbstractPayment;
+use HydrogenpayAfrica\AbstractPayment;
 
 trait Prepare
 {
@@ -48,19 +48,5 @@ trait Prepare
 
         ksort($options);
 
-        // $this->transactionData = $options;
-
-        // $hashedPayload = '';
-
-        // foreach($options as $key => $value){
-        //     $hashedPayload .= $value;
-        // }
-
-        // echo $hashedPayload;
-        // $completeHash = $hashedPayload.$this->secretKey;
-        // $hash = hash('sha256', $completeHash);
-
-        // $this->integrityHash = $hash;
-        // return $this;
     }
 }

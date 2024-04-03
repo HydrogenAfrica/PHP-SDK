@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Contract;
+namespace HydrogenpayAfrica\Contract;
 
 use Psr\Http\Client\ClientInterface;
 use Psr\Log\LoggerInterface;

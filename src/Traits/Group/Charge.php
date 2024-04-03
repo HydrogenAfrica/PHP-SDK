@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Traits\Group;
+namespace HydrogenpayAfrica\Traits\Group;
 
-use HydrogenAfrica\Service\Transactions;
+use HydrogenpayAfrica\Service\Transactions;
 use Psr\Http\Client\ClientExceptionInterface;
 
 trait Charge
@@ -26,7 +26,7 @@ trait Charge
         return (new Transactions($this->config))->verify($transactionId);
     }
 
-    private function checkPayloadIsValid(\HydrogenAfrica\Entities\Payload $payload, string $criteria): bool
+    private function checkPayloadIsValid(\HydrogenpayAfrica\Entities\Payload $payload, string $criteria): bool
     {
         $this->logger->notice('Charge Group::Verifying Payload  ...');
         //if does not payload contains $criteria :: false

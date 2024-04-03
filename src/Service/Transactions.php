@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Service;
+namespace HydrogenpayAfrica\Service;
 
-use HydrogenAfrica\Contract\ConfigInterface;
-use HydrogenAfrica\EventHandlers\TransactionVerificationEventHandler;
-use HydrogenAfrica\Traits\ApiOperations\Post;
+use HydrogenpayAfrica\Contract\ConfigInterface;
+use HydrogenpayAfrica\EventHandlers\TransactionVerificationEventHandler;
+use HydrogenpayAfrica\Traits\ApiOperations\Post;
 use Psr\Http\Client\ClientExceptionInterface;
-// use HydrogenAfrica\Service\Service as Http;
-// use HydrogenAfrica\Helper\EnvVariables;
 
 
 class Transactions extends Service

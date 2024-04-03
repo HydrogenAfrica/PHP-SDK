@@ -2,9 +2,9 @@
 /**
  *
  
- * Hydrogen Client Library for PHP
+ * Hydrogenpay Client Library for PHP
  *
- * Copyright (c) 2024 Hydrogen inc.
+ * Copyright (c) 2024 Hydrogenpay inc.
  * This file is open source and available under the MIT license.
  * See the LICENSE file for more info.
  *
@@ -23,6 +23,6 @@ DG\BypassFinals::setWhitelist([
     '*/src/Controller/*',
 ]);
 
-# hydrogen setup.
+# hydrogenpay setup.
 require_once __DIR__ . '/../setup.php';
 

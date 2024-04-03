@@ -3,16 +3,16 @@
 namespace Unit\Service;
 
 use PHPUnit\Framework\TestCase;
-use HydrogenAfrica\HydrogenAfrica;
-use HydrogenAfrica\Util\AuthMode;
-use HydrogenAfrica\Util\Currency;
-use HydrogenAfrica\Test\Resources\Setup\Config;
+use HydrogenpayAfrica\HydrogenpayAfrica;
+use HydrogenpayAfrica\Util\AuthMode;
+use HydrogenpayAfrica\Util\Currency;
+use HydrogenpayAfrica\Test\Resources\Setup\Config;
 
 class AccountTest extends TestCase
 {
     protected function setUp(): void
     {
-        HydrogenAfrica::bootstrap();
+        HydrogenpayAfrica::bootstrap();
     }
 
     public function testNgnAuthModeReturn()
@@ -32,7 +32,7 @@ class AccountTest extends TestCase
             ],
         ];
 
-        $accountpayment = \HydrogenAfrica\HydrogenAfrica::create("account");
+        $accountpayment = \HydrogenpayAfrica\HydrogenpayAfrica::create("account");
         $customerObj = $accountpayment->customer->create([
             "full_name" => "Owolabi",
             "email" => "developers@hydrogenpay.com",
@@ -54,7 +54,7 @@ class AccountTest extends TestCase
             "additionalData" => null,
         ];
 
-        $accountpayment = \HydrogenAfrica\HydrogenAfrica::create("account");
+        $accountpayment = \HydrogenpayAfrica\HydrogenpayAfrica::create("account");
         $customerObj = $accountpayment->customer->create([
             "full_name" => "Owolabi",
             "email" => "developers@hydrogenpay.com",
@@ -81,7 +81,7 @@ class AccountTest extends TestCase
             ],
         ];
 
-        $accountpayment = \HydrogenAfrica\HydrogenAfrica::create("account");
+        $accountpayment = \HydrogenpayAfrica\HydrogenpayAfrica::create("account");
         $customerObj = $accountpayment->customer->create([
             "full_name" => "Adekunle",
             "email" => "developers@hydrogenpay.com",

@@ -1,8 +1,8 @@
 <?php
 
-namespace HydrogenAfrica\Entities;
+namespace HydrogenpayAfrica\Entities;
 
-use HydrogenAfrica\Contract\EntityInterface;
+use HydrogenpayAfrica\Contract\EntityInterface;
 
 class Customer implements EntityInterface
 {

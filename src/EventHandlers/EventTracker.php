@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\EventHandlers;
+namespace HydrogenpayAfrica\EventHandlers;
 
-use HydrogenAfrica\Service\Service as Http;
+use HydrogenpayAfrica\Service\Service as Http;
 use Psr\Http\Client\ClientExceptionInterface;
 
 trait EventTracker

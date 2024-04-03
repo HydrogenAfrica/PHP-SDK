@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-Have you read our [Code of Conduct](https://github.com/HydrogenAfrica/PHP/blob/master/CONTRIBUTING.md)? By filing an Issue, you are expected to comply with it, including treating everyone with respect.
+Have you read our [Code of Conduct](https://github.com/HydrogenpayAfrica/PHP/blob/master/CONTRIBUTING.md)? By filing an Issue, you are expected to comply with it, including treating everyone with respect.
 
 # Description
 <!-- Description of the issue -->

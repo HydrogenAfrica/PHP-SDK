@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica;
+namespace HydrogenpayAfrica;
 
 /**
  * Class Payload
  *
- * @package    HydrogenAfrica
- * @deprecated Use HydrogenAfrica\Entities\Payload instead.
+ * @package    HydrogenpayAfrica
+ * @deprecated Use HydrogenpayAfrica\Entities\Payload instead.
  */
 class Payload
 {
@@ -16,7 +16,7 @@ class Payload
 
     public function __construct()
     {
-        $this->instance = new \HydrogenAfrica\Entities\Payload();
+        $this->instance = new \HydrogenpayAfrica\Entities\Payload();
     }
 
     public function get(string $param)

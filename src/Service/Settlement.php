@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Service;
+namespace HydrogenpayAfrica\Service;
 
-use HydrogenAfrica\Contract\ConfigInterface;
-use HydrogenAfrica\EventHandlers\EventTracker;
+use HydrogenpayAfrica\Contract\ConfigInterface;
+use HydrogenpayAfrica\EventHandlers\EventTracker;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class Settlement extends Service

@@ -6,21 +6,21 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Library;
+namespace HydrogenpayAfrica\Library;
 
-use HydrogenAfrica\EventHandlers\EventHandlerInterface;
-use HydrogenAfrica\Helper\CheckoutHelper;
-use HydrogenAfrica\Service\Service as Http;
-use HydrogenAfrica\Entities\Payload;
+use HydrogenpayAfrica\EventHandlers\EventHandlerInterface;
+use HydrogenpayAfrica\Helper\CheckoutHelper;
+use HydrogenpayAfrica\Service\Service as Http;
+use HydrogenpayAfrica\Entities\Payload;
 use Psr\Log\LoggerInterface;
-use HydrogenAfrica\Helper\EnvVariables;
+use HydrogenpayAfrica\Helper\EnvVariables;
 
 final class Modal
 {
     public const POPUP = 'inline';
     public const REDIRECT = 'redirect';
-    private \HydrogenAfrica\Entities\Payload $payload;
-    private \HydrogenAfrica\Entities\Customer $customer;
+    private \HydrogenpayAfrica\Entities\Payload $payload;
+    private \HydrogenpayAfrica\Entities\Customer $customer;
     private string $type;
     private EventHandlerInterface $paymentHandler;
     private array $generatedTransactionData;
@@ -52,7 +52,7 @@ final class Modal
     }
     public function with(array $args)
     {
-        $this->payload = (new \HydrogenAfrica\Factories\PayloadFactory())->create([
+        $this->payload = (new \HydrogenpayAfrica\Factories\PayloadFactory())->create([
             'amount' => $args['amount'],
             'email' => $args['email'],
             'currency' => 'NGN',

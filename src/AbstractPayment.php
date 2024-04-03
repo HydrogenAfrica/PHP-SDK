@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace HydrogenAfrica;
 
-use HydrogenAfrica\Contract\ConfigInterface;
-use HydrogenAfrica\EventHandlers\EventHandlerInterface;
-use HydrogenAfrica\Helper\EnvVariables;
-use HydrogenAfrica\Traits\ApiOperations as Api;
-use HydrogenAfrica\Traits\PayloadOperations as Payload;
+use HydrogenpayAfrica\Contract\ConfigInterface;
+use HydrogenpayAfrica\EventHandlers\EventHandlerInterface;
+use HydrogenpayAfrica\Helper\EnvVariables;
+use HydrogenpayAfrica\Traits\ApiOperations as Api;
+use HydrogenpayAfrica\Traits\PayloadOperations as Payload;
 use Psr\Log\LoggerInterface;
 
 abstract class AbstractPayment

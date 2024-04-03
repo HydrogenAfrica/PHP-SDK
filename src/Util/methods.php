@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use HydrogenAfrica\Service\AccountPayment;
-use HydrogenAfrica\Service\BankTransfer;
-use HydrogenAfrica\Service\TokenizedCharge;
-use HydrogenAfrica\Service\Transfer;
-use HydrogenAfrica\Service\Ussd;
+use HydrogenpayAfrica\Service\AccountPayment;
+use HydrogenpayAfrica\Service\BankTransfer;
+use HydrogenpayAfrica\Service\TokenizedCharge;
+use HydrogenpayAfrica\Service\Transfer;
+use HydrogenpayAfrica\Service\Ussd;
 
 return [
     'account' => AccountPayment::class,

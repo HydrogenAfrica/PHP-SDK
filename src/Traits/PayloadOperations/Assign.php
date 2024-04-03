@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Traits\PayloadOperations;
+namespace HydrogenpayAfrica\Traits\PayloadOperations;
 
 trait Assign
 {

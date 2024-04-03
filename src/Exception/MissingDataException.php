@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Exception;
+namespace HydrogenpayAfrica\Exception;
 
 class MissingDataException extends \Exception
 {

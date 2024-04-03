@@ -2,18 +2,18 @@
 
 namespace Unit\Service;
 
-use HydrogenAfrica\Test\Resources\Setup\Config;
-use HydrogenAfrica\HydrogenAfrica;
-use HydrogenAfrica\Util\AuthMode;
+use HydrogenpayAfrica\Test\Resources\Setup\Config;
+use HydrogenpayAfrica\HydrogenAfrica;
+use HydrogenpayAfrica\Util\AuthMode;
 use PHPUnit\Framework\TestCase;
-use HydrogenAfrica\Util\Currency;
+use HydrogenpayAfrica\Util\Currency;
 
 
 class BankTransferTest extends TestCase
 {
     protected function setUp(): void
     {
-        HydrogenAfrica::bootstrap();
+        HydrogenpayAfrica::bootstrap();
     }
 
     public function testAuthModeReturnBankTransfer()
@@ -25,7 +25,7 @@ class BankTransferTest extends TestCase
             "redirectUrl" => "https://google.com"
         ];
 
-        $btpayment = HydrogenAfrica::create("bank-transfer");
+        $btpayment = HydrogenpayAfrica::create("bank-transfer");
         $customerObj = $btpayment->customer->create([
             "full_name" => "Lawal Yusuf",
             "email" => "developers@hydrogenpay.com",
@@ -49,7 +49,7 @@ class BankTransferTest extends TestCase
             "expires" => 3600
         ];
 
-        $btpayment = HydrogenAfrica::create("bank-transfer");
+        $btpayment = HydrogenpayAfrica::create("bank-transfer");
         $customerObj = $btpayment->customer->create([
             "full_name" => "Yusuf Lawal",
             "email" => "developers@hydrogenpay.com",

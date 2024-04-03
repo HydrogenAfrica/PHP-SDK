@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Traits;
+namespace HydrogenpayAfrica\Traits;
 
 use Exception;
-use HydrogenAfrica\Contract;
+use HydrogenpayAfrica\Contract;
 use InvalidArgumentException;
 
 trait PaymentFactory

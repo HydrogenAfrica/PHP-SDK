@@ -6,9 +6,9 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Config;
+namespace HydrogenpayAfrica\Config;
 
-use HydrogenAfrica\Contract\ConfigInterface;
+use HydrogenpayAfrica\Contract\ConfigInterface;
 use GuzzleHttp\Client;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;

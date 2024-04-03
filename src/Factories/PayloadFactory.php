@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Factories;
+namespace HydrogenpayAfrica\Factories;
 
-use HydrogenAfrica\Contract\FactoryInterface;
-use HydrogenAfrica\Entities\Payload as Load;
+use HydrogenpayAfrica\Contract\FactoryInterface;
+use HydrogenpayAfrica\Entities\Payload as Load;
 
 /**
  * Class PayloadFactory.

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Factories;
+namespace HydrogenpayAfrica\Factories;
 
-use HydrogenAfrica\Contract\CustomerInterface;
-use HydrogenAfrica\Entities\Customer as Person;
+use HydrogenpayAfrica\Contract\CustomerInterface;
+use HydrogenpayAfrica\Entities\Customer as Person;
 use InvalidArgumentException;
-use HydrogenAfrica\Contract\FactoryInterface;
+use HydrogenpayAfrica\Contract\FactoryInterface;
 
 class CustomerFactory implements CustomerInterface, FactoryInterface
 {

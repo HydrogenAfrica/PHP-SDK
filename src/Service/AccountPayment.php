@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Service;
+namespace HydrogenpayAfrica\Service;
 
 use Exception;
-use HydrogenAfrica\Contract\ConfigInterface;
-use HydrogenAfrica\Contract\Payment;
-use HydrogenAfrica\EventHandlers\AccountEventHandler;
-use HydrogenAfrica\Entities\Payload;
-use HydrogenAfrica\Traits\Group\Charge;
-use HydrogenAfrica\Util\Currency;
+use HydrogenpayAfrica\Contract\ConfigInterface;
+use HydrogenpayAfrica\Contract\Payment;
+use HydrogenpayAfrica\EventHandlers\AccountEventHandler;
+use HydrogenpayAfrica\Entities\Payload;
+use HydrogenpayAfrica\Traits\Group\Charge;
+use HydrogenpayAfrica\Util\Currency;
 use GuzzleHttp\Exception\GuzzleException;
 use InvalidArgumentException;
 use Psr\Http\Client\ClientExceptionInterface;

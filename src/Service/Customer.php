@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Service;
+namespace HydrogenpayAfrica\Service;
 
-use HydrogenAfrica\Contract\CustomerInterface;
-use HydrogenAfrica\Entities\Customer as Person;
-use HydrogenAfrica\Factories\CustomerFactory;
+use HydrogenpayAfrica\Contract\CustomerInterface;
+use HydrogenpayAfrica\Entities\Customer as Person;
+use HydrogenpayAfrica\Factories\CustomerFactory;
 use InvalidArgumentException;
 
 /**
  * Class Customer.
  *
- * @deprecated use \HydrogenAfrica\Factories\CustomerFactory instead
+ * @deprecated use \HydrogenpayAfrica\Factories\CustomerFactory instead
  */
 class Customer
 {

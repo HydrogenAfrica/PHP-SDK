@@ -4,31 +4,31 @@ declare(strict_types=1);
 
 namespace HydrogenAfrica;
 
-use HydrogenAfrica\Config\ForkConfig;
-use HydrogenAfrica\EventHandlers\EventHandlerInterface;
-use HydrogenAfrica\Exception\ApiException;
-use HydrogenAfrica\Helper\CheckCompatibility;
-use HydrogenAfrica\Traits\PaymentFactory;
-use HydrogenAfrica\Traits\Setup\Configure;
-use HydrogenAfrica\Library\Modal;
+use HydrogenpayAfrica\Config\ForkConfig;
+use HydrogenpayAfrica\EventHandlers\EventHandlerInterface;
+use HydrogenpayAfrica\Exception\ApiException;
+use HydrogenpayAfrica\Helper\CheckCompatibility;
+use HydrogenpayAfrica\Traits\PaymentFactory;
+use HydrogenpayAfrica\Traits\Setup\Configure;
+use HydrogenpayAfrica\Library\Modal;
 use Psr\Http\Client\ClientExceptionInterface;
 
 define('FLW_PHP_ASSET_DIR', __DIR__ . '../assets/');
 
 /**
- * Hydrogen PHP SDK
+ * Hydrogenpay PHP SDK
  *
  * @author HydrogenAfrica Developers <developers@hydrogenpay.com>
  *
  * @version 1.0
  */
-class HydrogenAfrica extends AbstractPayment
+class HydrogenpayAfrica extends AbstractPayment
 {
     use Configure;
     use PaymentFactory;
 
     /**
-     * HydrogenAfrica Construct
+     * HydrogenpayAfrica Construct
      *
      * @param string $prefix
      * @param bool   $overrideRefWithPrefix Set this parameter to true to use your prefix as the transaction reference
@@ -47,7 +47,7 @@ class HydrogenAfrica extends AbstractPayment
     // {
     //     if(!CheckCompatibility::isSsl() && 'production' === $this->getConfig()->getEnv()) {
 
-    //         throw new \Exception('HydrogenAfrica: cannot load checkout modal on an unsecure page - no SSL detected. ');
+    //         throw new \Exception('HydrogenpayAfrica: cannot load checkout modal on an unsecure page - no SSL detected. ');
     //     }
     // }
 
@@ -198,7 +198,7 @@ class HydrogenAfrica extends AbstractPayment
     /**
      * Sets the transaction redirect url
      *
-     * @param string $redirectUrl This is where the HydrogenAfrica will redirect to after
+     * @param string $redirectUrl This is where the HydrogenpayAfrica will redirect to after
      *                            completing a payment
      */
     public function setRedirectUrl(string $redirectUrl): object
@@ -317,7 +317,7 @@ class HydrogenAfrica extends AbstractPayment
         console.log("return transaction ref", res);
     }';
 
-        echo 'HydrogenCheckout({
+        echo 'HydrogenpayCheckout({
         live_auth_token: "' . self::$config->getPublicKey() . '",
         amount: ' . $this->amount . ',
         currency: "' . $this->currency . '",

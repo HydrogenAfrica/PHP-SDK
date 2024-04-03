@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\Contract;
+namespace HydrogenpayAfrica\Contract;
 
-use HydrogenAfrica\Entities\Customer;
+use HydrogenpayAfrica\Entities\Customer;
 
 interface CustomerInterface
 {

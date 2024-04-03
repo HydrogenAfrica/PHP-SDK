@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HydrogenAfrica\EventHandlers;
+namespace HydrogenpayAfrica\EventHandlers;
 
-use HydrogenAfrica\Contract\ConfigInterface;
+use HydrogenpayAfrica\Contract\ConfigInterface;
 
 class BankTransferEventHandler implements EventHandlerInterface
 {
