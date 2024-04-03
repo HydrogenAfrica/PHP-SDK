@@ -8,6 +8,9 @@ use HydrogenAfrica\Contract\ConfigInterface;
 use HydrogenAfrica\EventHandlers\TransactionVerificationEventHandler;
 use HydrogenAfrica\Traits\ApiOperations\Post;
 use Psr\Http\Client\ClientExceptionInterface;
+// use HydrogenAfrica\Service\Service as Http;
+// use HydrogenAfrica\Helper\EnvVariables;
+
 
 class Transactions extends Service
 {
@@ -24,7 +27,7 @@ class Transactions extends Service
     private static string $name = 'transactions';
     private string $end_point;
     private array $payment_type = [
-        'card','debit_ng_account','mobilemoney','bank_transfer', 'ach_payment',
+        'card', 'bank_transfer',
     ];
     private TransactionVerificationEventHandler $eventHandler;
 
@@ -49,6 +52,7 @@ class Transactions extends Service
             'GET',
             self::ENDPOINT . "/{$transactionId}/verify",
         );
+
         TransactionVerificationEventHandler::setResponseTime();
 
         return $response;
@@ -57,16 +61,19 @@ class Transactions extends Service
     /**
      * @throws ClientExceptionInterface
      */
-    public function verifyWithTxref(string $tx_ref): \stdClass
+    public function verifyWithTxref(string $transactionRef): \stdClass
     {
-        $this->logger->notice('Transaction Service::Verifying Transaction...' . $tx_ref);
+        $this->logger->notice('Transaction Service::Verifying Transaction...' . $transactionRef);
+
         TransactionVerificationEventHandler::startRecording();
+
         $response = $this->request(
             null,
             'GET',
-            self::ENDPOINT . '/verify_by_reference?tx_ref=' . $tx_ref,
+            self::ENDPOINT . '/verify_by_reference?tx_ref=' . $transactionRef,
         );
         TransactionVerificationEventHandler::setResponseTime();
+
         return $response;
     }
 
@@ -128,7 +135,7 @@ class Transactions extends Service
         string $currency = 'NGN',
         string $payment_type = 'card'
     ): \stdClass {
-        if (! $amount) {
+        if (!$amount) {
             $msg = 'Please pass a valid amount';
             $this->logger->warning($msg);
             throw new \InvalidArgumentException($msg);
@@ -138,7 +145,7 @@ class Transactions extends Service
             'currency' => $currency,
         ];
 
-        if (! isset($this->payment_type[$payment_type])) {
+        if (!isset($this->payment_type[$payment_type])) {
             $logData = json_encode($this->payment_type);
             $msg = "Please pass a valid Payment Type: options::{$logData}";
             $this->logger->warning($msg);
@@ -214,7 +221,7 @@ class Transactions extends Service
         $data = [
             'otp' => $otp,
             'flw_ref' => $flw_ref,
-        //            "type" => "card" //default would be card
+            //            "type" => "card" //default would be card
         ];
 
         return $this->request(

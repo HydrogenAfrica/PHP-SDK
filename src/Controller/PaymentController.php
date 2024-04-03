@@ -50,22 +50,21 @@ final class PaymentController
         call_user_method_array($name, $this, $args);
     }
 
-    private function handleSessionData( array $request )
+    private function handleSessionData(array $request)
     {
         $_SESSION['success_url'] = $request['success_url'];
         $_SESSION['failure_url'] = $request['failure_url'];
-        $_SESSION['currency'] = $request['currency'];
         $_SESSION['amount'] = $request['amount'];
     }
 
     public function process(array $request)
     {
         $this->handleSessionData($request);
-        
+
         try {
             $_SESSION['p'] = $this->client;
 
-            if('inline' === $this->modalType ) {
+            if ('inline' === $this->modalType) {
                 echo $this->client
                     ->eventHandler($this->handler)
                     ->render(Modal::POPUP)->with($request)->getHtml();
@@ -75,7 +74,6 @@ final class PaymentController
                     ->render(Modal::REDIRECT)->with($request)->getUrl();
                 header('Location: ' . $paymentLink);
             }
-            
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
@@ -83,10 +81,9 @@ final class PaymentController
 
     public function callback(array $request)
     {
-        $tx_ref = $request['tx_ref'];
-        $status = $request['status'];
+        $transactionRef = $request['TransactionRef'];
 
-        if (empty($tx_ref)) {
+        if (empty($transactionRef)) {
             session_destroy();
         }
 
@@ -97,37 +94,16 @@ final class PaymentController
 
         $payment = $_SESSION['p'];
 
-        // $payment::setUp([
-        //     'secret_key' => 'FLWSECK_TEST-c16ebd6d7695db8318fdb08bd224a97c-X',
-        //     'public_key' => 'FLWPUBK_TEST-50a33c87b4a482212274f7698679716b-X',
-        //     'encryption_key' => 'FLWSECK_TEST1f8eb6ef03d9',
-        //     'environment' => 'staging'
-        // ]);
-
         $payment::bootstrap();
 
-        if ('cancelled' === $status) {
-            $payment
-                ->eventHandler($this->handler)
-                ->paymentCanceled($tx_ref);
-        }
-
-        if ('successful' === $status && isset($request['transaction_id'])) {
-            $tx_id = $request['transaction_id'];
-
-            if (empty($tx_id) && !empty($tx_ref)) {
-                // get tx_id with the transaction service.
-                $response = (new Transactions())->verifyWithTxref($tx_ref);
-
-                if ('success' === $response->status) {
-                    $tx_id = $response->data->id;
-                }
-            }
+        if (isset($request['TransactionRef'])) {
+            $transactionRef = $request['TransactionRef'];
 
             $payment->logger->notice('Payment completed. Now requerying payment.');
+
             $payment
                 ->eventHandler($this->handler)
-                ->requeryTransaction($tx_id);
+                ->requeryTransaction($transactionRef);
         }
     }
 }

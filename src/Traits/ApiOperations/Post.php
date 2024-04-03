@@ -8,6 +8,7 @@ use HydrogenAfrica\Contract\ConfigInterface;
 use HydrogenAfrica\Service\Service as Http;
 use Psr\Http\Client\ClientExceptionInterface;
 
+
 trait Post
 {
     /**
@@ -19,8 +20,17 @@ trait Post
      */
     public function postURL(ConfigInterface $config, array $data): string
     {
-        $response = (new Http($config))->request($data, 'POST', $this->end_point);
 
-        return '';
+        $mode = self::$config->getMode();
+
+        if ($mode == 'test') {
+
+            $response = (new Http(self::$config))->request($data, 'POSTTEST');
+        } else {
+
+            $response = (new Http(self::$config))->request($data, 'POSTLIVE');
+        }
+
+        return $response->data->status;
     }
 }

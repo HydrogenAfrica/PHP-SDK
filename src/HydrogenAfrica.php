@@ -235,84 +235,73 @@ class HydrogenAfrica extends AbstractPayment
     /**
      * Requerys a previous transaction from the Rave payment gateway
      *
-     * @param  string $referenceNumber This should be the reference number of the transaction you want to requery
+     * @param  string $transactionRef This should be the reference number of the transaction you want to requery
      * @throws ClientExceptionInterface
      * @throws ApiException
      */
-    public function requeryTransaction(string $referenceNumber): object
+    public function requeryTransaction(string $transactionRef): object
     {
-        $this->txref = $referenceNumber;
+        $this->transactionRef = $transactionRef;
         $this->requeryCount++;
-        $this->logger->notice('Requerying Transaction....' . $this->txref);
+        $this->logger->notice('Requerying Transaction....' . $this->transactionRef);
         if (isset($this->handler)) {
-            $this->handler->onRequery($this->txref);
+            $this->handler->onRequery($this->transactionRef);
         }
 
         $data = [
-            'id' => (int) $referenceNumber,
-            // 'only_successful' => '1'
+            // 'id' => (int) $transactionRef,
+            'transactionRef' => $transactionRef,
         ];
 
-        $url = '/transactions/' . $data['id'] . '/verify';
+        $url = '/transactions/' . $data['transactionRef'] . '/verify';
 
-        $response = $this->getURL(static::$config, $url);
+        $response = $this->postURL(static::$config, $data);
 
-        //check the status is success.
-        if ($response->status === 'success') {
-            if ($response->data && $response->data->status === 'successful') {
-                $this->logger->notice('Requeryed a successful transaction....' . json_encode($response->data));
-                // Handle successful.
-                if (isset($this->handler)) {
-                    $this->handler->onSuccessful($response->data);
-                }
-            } elseif ($response->data && $response->data->status === 'failed') {
-                // Handle Failure
-                $this->logger->warning('Requeryed a failed transaction....' . json_encode($response->data));
-                if (isset($this->handler)) {
-                    $this->handler->onFailure($response->data);
-                }
-            } else {
-                // Handled an undecisive transaction. Probably timed out.
-                $this->logger->warning(
-                    'Requeryed an undecisive transaction....' . json_encode($response->data)
-                );
-                // I will requery again here. Just incase we have some devs that cannot setup a queue for requery.
-                // I don't like this.
-                if ($this->requeryCount > 4) {
-                    // Now you have to setup a queue by force. We couldn't get a status in 5 requeries.
-                    if (isset($this->handler)) {
-                        $this->handler->onTimeout($this->txref, $response->data);
-                    }
-                } else {
-                    $this->logger->notice('delaying next requery for 3 seconds');
-                    sleep(3);
-                    $this->logger->notice('Now retrying requery...');
-                    $this->requeryTransaction($this->txref);
-                }
-            }
-        } else {
-            // Handle Requery Error
+        //check the status is Paid of Failed.
+        // if ($response->status === 'success') {
+
+        $test = $responseObj = (object) [
+            'status' => $response, // Assuming 'Paid' or 'Failed' is the status
+            'data' => [
+                'amount' => 100.00, // Example additional data
+                'currency' => 'USD'
+            ]
+        ];
+
+        if ($test->status == 'Paid') {
+
+            $this->logger->notice('Requeryed a successful transaction....' . $response);
+            // Handle successful.
             if (isset($this->handler)) {
-                $this->handler->onRequeryError($response->data);
+                $this->handler->onSuccessful($test->status);
+            }
+        } else { // Use elseif instead of else
+            // Handle Failure
+
+            $this->logger->warning('Requeryed a failed transaction....' . $response);
+
+            if (isset($this->handler)) {
+                $this->handler->onFailure($test->status);
             }
         }
+
         return $this;
     }
 
     public function initialize(): void
-{
-    $this->createCheckSum();
+    {
+        $this->createCheckSum();
 
-    $this->logger->info('Rendering Payment Modal..');
+        $this->logger->info('Rendering Payment Modal..');
 
-    echo '<html lang="en">';
-    echo '<body>';
-    echo '<div style="display: flex; flex-direction: row;justify-content: center; align-content: center ">
+        echo '<html lang="en">';
+        echo '<body>';
+        echo '<div style="display: flex; flex-direction: row;justify-content: center; align-content: center ">
     Proccessing...<img src="../assets/images/ajax-loader.gif"  alt="loading-gif"/></div>';
-    echo '<script type="text/javascript" src="https://hydrogenshared.blob.core.windows.net/paymentgateway/paymentGatewayInegration.js"></script>';
-    echo '<script>';
-    echo 'document.addEventListener("DOMContentLoaded", function(event) {';
-    echo 'let obj = {
+        echo '<script type="text/javascript" src="https://hydrogenshared.blob.core.windows.net/paymentgateway/paymentGatewayInegration.js"></script>';
+        echo '<script>';
+        echo 'document.addEventListener("DOMContentLoaded", function(event) {';
+        echo 'let obj = {
         amount: ' . $this->amount . ',
         email: "' . $this->customerEmail . '",
         currency: "' . $this->currency . '",
@@ -322,13 +311,13 @@ class HydrogenAfrica extends AbstractPayment
         isAPI: false,
     };';
 
-    echo 'let token = "' . self::$config->getPublicKey() . '";';
-    echo 'async function openDialogModal() {
+        echo 'let token = "' . self::$config->getPublicKey() . '";';
+        echo 'async function openDialogModal() {
         let res = await handlePgData(obj, token);
         console.log("return transaction ref", res);
     }';
 
-    echo 'HydrogenCheckout({
+        echo 'HydrogenCheckout({
         live_auth_token: "' . self::$config->getPublicKey() . '",
         amount: ' . $this->amount . ',
         currency: "' . $this->currency . '",
@@ -340,15 +329,15 @@ class HydrogenAfrica extends AbstractPayment
         description: "' . $this->customDescription . '",
     });';
 
-    echo 'openDialogModal();'; // Trigger the openDialogModal function
+        echo 'openDialogModal();'; // Trigger the openDialogModal function
 
-    echo '});';
-    echo '</script>';
-    echo '</body>';
-    echo '</html>';
+        echo '});';
+        echo '</script>';
+        echo '</body>';
+        echo '</html>';
 
-    $this->logger->info('Rendered Payment Modal Successfully..');
-}
+        $this->logger->info('Rendered Payment Modal Successfully..');
+    }
 
     /**
      * Handle canceled payments with this method

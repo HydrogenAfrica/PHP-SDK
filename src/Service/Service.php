@@ -33,6 +33,7 @@ class Service implements ServiceInterface
     protected string $testUrl;
     protected string $liveUrl;
     protected string $secret;
+    protected string $verifyUrl;
     private static string $name = 'service';
     private static ?ConfigInterface $spareConfig = null;
     private ClientInterface $http;
@@ -45,12 +46,11 @@ class Service implements ServiceInterface
         $this->config = is_null($config) ? self::$spareConfig : $config;
         $this->http = $this->config->getHttp();
         $this->logger = $this->config->getLoggerInstance();
-        // $this->secret = $this->config->getSecretKey();
+        $this->secret = $this->config->getSecretKey();
 
-        $this->secret = $this->config->getPublicKey();
+        // $this->secret = $this->config->getPublicKey();
         $this->url = EnvVariables::BASE_URL . '/';
         $this->baseUrl = EnvVariables::BASE_URL;
-
     }
 
     public function getName(): string
@@ -72,62 +72,100 @@ class Service implements ServiceInterface
         bool $overrideUrl = false
     ): stdClass {
 
-        // $secret = $this->config->getSecretKey();
-        // $secret = $this->config->getPublicKey();
+        $modeTest = $this->config->getSecretKey();
+        $modeLive = $this->config->getPublicKey();
         $payload_hash = $data['payload_hash']; // Assuming 'payload_hash' is part of the $data array
         $hydrogen_url = $data['payload_url'];
+        $verifyTestUrl = EnvVariables::VERIFY_TEST_PAY;
+        $verifyLiveUrl = EnvVariables::VERIFY_LIVE_PAY;
 
         $url = $this->getUrl($overrideUrl, $additionalurl);
 
         switch ($verb) {
-        case 'POST':
-            $response = $this->http->request(
-                // 'POST', $url, [
-                'POST', $hydrogen_url, [
-                'debug' => false, 
-                'headers' => [
-                    // 'Authorization' => "Bearer $secret",
-                    'Authorization' => "Bearer $payload_hash",
-                    'Content-Type' => 'application/json',
-                ],
-                'json' => $data,
+            case 'POST':
+                $response = $this->http->request(
+                    // 'POST', $url, [
+                    'POST',
+                    $hydrogen_url,
+                    [
+                        'debug' => false,
+                        'headers' => [
+                            // 'Authorization' => "Bearer $secret",
+                            'Authorization' => "Bearer $payload_hash",
+                            'Content-Type' => 'application/json',
+                        ],
+                        'json' => $data,
                     ]
-            );
-            break;
-        case 'PUT':
-            $response = $this->http->request(
-                'PUT', $url, [
-                'debug' => false, 
-                'headers' => [
-                    'Authorization' => "Bearer $payload_hash",
-                    'Content-Type' => 'application/json',
-                ],
-                'json' => $data ?? [],
+                );
+                break;
+            case 'POSTTEST':
+                $response = $this->http->request(
+                    'POST',
+                    $verifyTestUrl,
+                    [
+                        'debug' => false,
+                        'headers' => [
+                            'Authorization' => "Bearer $modeTest",
+                            'Content-Type' => 'application/json',
+                        ],
+                        'json' => $data,
                     ]
-            );
-            break;
-        case 'DELETE':
-            $response = $this->http->request(
-                'DELETE', $url, [
-                'debug' => false,
-                'headers' => [
-                    'Authorization' => "Bearer $payload_hash",
-                    'Content-Type' => 'application/json',
-                ],
+                );
+                break;
+            case 'POSTLIVE':
+                $response = $this->http->request(
+                    'POST',
+                    $verifyLiveUrl,
+                    [
+                        'debug' => false,
+                        'headers' => [
+                            'Authorization' => "Bearer $modeLive",
+                            'Content-Type' => 'application/json',
+                        ],
+                        'json' => $data,
                     ]
-            );
-            break;
-        default:
-            $response = $this->http->request(
-                'GET', $url, [
-                'debug' => false,
-                'headers' => [
-                    'Authorization' => "Bearer $payload_hash",
-                    'Content-Type' => 'application/json',
-                ],
+                );
+                break;
+            case 'PUT':
+                $response = $this->http->request(
+                    'PUT',
+                    $url,
+                    [
+                        'debug' => false,
+                        'headers' => [
+                            'Authorization' => "Bearer $payload_hash",
+                            'Content-Type' => 'application/json',
+                        ],
+                        'json' => $data ?? [],
                     ]
-            );
-            break;
+                );
+                break;
+            case 'DELETE':
+                $response = $this->http->request(
+                    'DELETE',
+                    $url,
+                    [
+                        'debug' => false,
+                        'headers' => [
+                            'Authorization' => "Bearer $payload_hash",
+                            'Content-Type' => 'application/json',
+                        ],
+                    ]
+                );
+                break;
+            default:
+                $response = $this->http->request(
+                    'GET',
+                    $url,
+                    [
+                        'debug' => false,
+                        'headers' => [
+                            'Authorization' => "Bearer $payload_hash",
+                            'Content-Type' => 'application/json',
+                        ],
+                    ]
+                );
+                break;
         }
 
         $body = $response->getBody()->getContents();
@@ -139,12 +177,11 @@ class Service implements ServiceInterface
         $pattern = '/([0-9]){7}/';
         $is_valid = preg_match_all($pattern, $transactionId);
 
-        if (! $is_valid) {
+        if (!$is_valid) {
             $this->logger->warning('Transaction Service::cannot verify invalid transaction id. ');
             throw new InvalidArgumentException('cannot verify invalid transaction id.');
         }
     }
-
     private static function bootstrap(?ConfigInterface $config = null): void
     {
         if (is_null($config)) {

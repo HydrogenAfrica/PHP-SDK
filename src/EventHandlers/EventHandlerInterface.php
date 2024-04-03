@@ -22,14 +22,14 @@ interface EventHandlerInterface
     /**
      * This is called only when a transaction is successful
      *
-     * @param object $transactionData This is the transaction data as returned from the Rave payment gateway
+     * @param object $transactionData This is the transaction data as returned from the Hydrogen payment gateway
      * */
     public function onSuccessful(object $transactionData): void;
 
     /**
      * This is called only when a transaction failed
      *
-     * @param object $transactionData This is the transaction data as returned from the Rave payment gateway
+     * @param object $transactionData This is the transaction data as returned from the Hydrogen payment gateway
      * */
     public function onFailure(object $transactionData): void;
 

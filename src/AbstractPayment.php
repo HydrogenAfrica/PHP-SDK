@@ -20,7 +20,7 @@ abstract class AbstractPayment
     public string $secretKey;
 
     public string $publicKey;
-    public string $txref;
+    public string $transactionRef;
     public $type;
     public LoggerInterface $logger;
     //    protected ?string $integrityHash = null;

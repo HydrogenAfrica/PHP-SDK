@@ -15,13 +15,16 @@ trait Get
     /**
      * @param  ConfigInterface $config
      * @param  string          $url
+     * @param  string          $data
      * @return stdClass
      * @throws ClientExceptionInterface
      * @throws ApiException
      */
     public function getURL(ConfigInterface $config, string $url): stdClass
     {
+
         $response = (new Http($config))->request(null, 'GET', $url);
+
         if ($response->status === 'success') {
             return $response;
         }

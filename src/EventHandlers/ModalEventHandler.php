@@ -30,31 +30,8 @@ class ModalEventHandler implements EventHandlerInterface
         // Give value for the transaction.
         // Update the transaction to note that you have given value for the transaction.
         // You can also redirect to your success page from here.
-        if ($transactionData->status === 'successful') {
-            $currency = $_SESSION['currency'];
-            $amount   = $_SESSION['amount'];
-
-            if ($transactionData->currency === $currency && floatval($transactionData->amount)  === floatval($amount)) {
-                header('Location: ' . $_SESSION['success_url']);
-                session_destroy();
-            }
-
-            if ($transactionData->currency === $currency && floatval($transactionData->amount) < floatval($amount)) {
-                // TODO: replace this a custom action.
-                echo "This Event Handler is an Implementation of " . __NAMESPACE__ . "\EventHandlerInterface </br>";
-                echo "Partial Payment Made ! replace this with your own action! ";
-                session_destroy();
-            }
-
-            if ($transactionData->currency !== $currency && floatval($transactionData->amount) === floatval($amount)) {
-                // TODO: replace this a custom action.
-                echo "This Event Handler is an Implementation of " . __NAMESPACE__ . "\EventHandlerInterface </br>";
-                echo "Currency mismatch. please look into it ! replace this with your own action ";
-                session_destroy();
-            }
-        } else {
-            $this->onFailure($transactionData);
-        }
+        header('Location: ' . $_SESSION['success_url']);
+        session_destroy();
     }
 
     /**

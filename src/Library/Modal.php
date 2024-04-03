@@ -50,7 +50,6 @@ final class Modal
         self::$config = $config;
         $this->logger = self::$config->getLoggerInstance();
     }
-
     public function with(array $args)
     {
         $this->payload = (new \HydrogenAfrica\Factories\PayloadFactory())->create([
@@ -60,17 +59,17 @@ final class Modal
             'description' => $args['description'],
             'customerName' => $args['customerName'],
             'meta' => $args['meta'],
-            'callback' => 'http://hydrogen_pg_php_integration.test/verifyPayment.php',
+            'callback' => $args['callback'],
         ]);
-        
+
         $this->payload->set('redirect_url', $args['redirect_url']);
-    
+
         $dataToHash = [
             'amount' => $args['amount'],
             'currency' => 'NGN',
             'email' => $args['email'],
         ];
-    
+
         $mode = self::$config->getMode();
         $secretKey = self::$config->getSecretKey();
         $publicKey = self::$config->getPublicKey();
@@ -84,22 +83,21 @@ final class Modal
         $hdrogenUrl = ($mode == 'test') ? $testUrl : $liveUrl;
 
         $hdrogenInlineScript = ($mode == 'test') ? $testInlineScript : $liveInlineScript;
-    
+
         $this->payload->set('payload_hash', CheckoutHelper::generateHash($dataToHash, $key));
         $this->payload->set('payload_url', CheckoutHelper::generatePayloadUrl($dataToHash, $hdrogenUrl));
         $this->payload->set('payload_inline', CheckoutHelper::generatePayloadUrl($dataToHash, $hdrogenInlineScript));
-
         return $this;
     }
-    
+
     public function getHtml()
     {
         if ($this->type !== self::POPUP) {
             return $this->returnUrl();
         }
-    
+
         $payloadArray = is_array($this->payload) ? $this->payload : $this->payload->toArray('modal');
-    
+
         $html = '';
         $html .= '<html lang="en">';
         $html .= '<body>';
@@ -119,7 +117,6 @@ final class Modal
         $html .= '</html>';
         return $html;
     }
-    
 
     public function getUrl()
     {
@@ -131,8 +128,5 @@ final class Modal
         $payload         = $this->payload->toArray('modal');
         $response = (new Http(self::$config))->request($payload, 'POST');
         return $response->data->url;
-
     }
-
-
 }
