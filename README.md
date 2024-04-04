@@ -2,7 +2,9 @@
 **Integrating Hydrogen PHP SDK Library for easy access to Hydrogen APIs**
 =========================================================================
 
-**Hydrogen Payment Gateway helps you process payments using cards and account transfers for faster delivery of goods and services on your PHP site.PHP Library provides easy access to Hydrogen APIs from php apps. It abstracts the complexity involved in direct integration and allows you to make quick calls to the APIs.This SDK communicates with Hydrogen API. You need to have a Hydrogen merchant account and Auth Key to use this SDK.**
+**Hydrogen Payment Gateway helps you process payments using cards and account transfers for faster delivery of goods and services on your PHP site.PHP Library provides easy access to Hydrogen APIs from php apps. It abstracts the complexity involved in direct integration and allows you to make quick calls to the APIs.**
+
+**This SDK communicates with Hydrogen API. You need to have a Hydrogen merchant account and Auth Key to use this SDK.**
 
 **Requirements**
 ================
