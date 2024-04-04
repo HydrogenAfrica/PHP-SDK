@@ -3,12 +3,6 @@ Hydrogen PHP SDK (Including Frameworks - Laravel|Symfomy|Codeigniter)
 **Integrating Hydrogen PHP SDK Library for easy access to Hydrogen APIs**
 =========================================================================
 
-![Packagist Downloads](https://img.shields.io/packagist/dt/hydrogenpay/hydrogenpay-sdk)
-
-
-**Introduction**
-================
-
 **Hydrogen Payment Gateway helps you process payments using cards and account transfers for faster delivery of goods and services on your PHP site.PHP Library provides easy access to Hydrogen APIs from php apps. It abstracts the complexity involved in direct integration and allows you to make quick calls to the APIs.This SDK communicates with Hydrogen API. You need to have a Hydrogen merchant account and Auth Key to use this SDK.**
 
 **Requirements**
@@ -35,7 +29,8 @@ Hydrogen PHP SDK (Including Frameworks - Laravel|Symfomy|Codeigniter)
 
 ```shell**
 
-composer require hydrogenpay/hydrogenpay-sdk
+composer require hydrogenpay/hydrogenpay-sdk:@dev
+
 
 ```
 
@@ -44,7 +39,9 @@ composer require hydrogenpay/hydrogenpay-sdk
 ```json
 {
     "require": {
-        "hydrogenpay/hydrogenpay-sdk": "^1.0"
+
+        "hydrogenpay/hydrogenpay-sdk": "@dev"
+
     }
 }
 
