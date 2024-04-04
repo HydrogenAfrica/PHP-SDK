@@ -5,9 +5,10 @@ Hydrogen PHP SDK (Including Frameworks - Laravel|Symfomy|Codeigniter)
 
 ![Packagist Downloads](https://img.shields.io/packagist/dt/hydrogenpay/hydrogenpay-sdk)
 
-![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/hydrogenpay/hydrogenpay-sdk)
+![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/hydrogenpay/hydrogenpay-sdk?style=flat-square)
 
-![Packagist License](https://img.shields.io/packagist/l/hydrogenpay/hydrogenpay-sdk)
+![Packagist License](https://img.shields.io/packagist/l/hydrogenpay/hydrogenpay-sdk?style=flat-square)
+
 
 **Introduction**
 ================
