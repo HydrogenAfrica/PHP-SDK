@@ -45,16 +45,12 @@ composer require hydrogenpay/hydrogenpay-sdk
 **Alternatively, you can add the package to your composer.json file and run the command composer install on your editor terminal.**
 
 ```json
-
- {
-
-    "require": {
-
-        "hydrogenpay/hydrogenpay-sdk": "^1.0"
-
-    }
-
+{
+    "require": {
+        "hydrogenpay/hydrogenpay-sdk": "^1.0"
+    }
 }
+
 
 ```
 
@@ -134,25 +130,15 @@ try {
 
 
 ```json
-
- {
-
-   "amount": 50,
-
-  "customerName": "Dev Test",
-
-  "email": "devtest@randomuser.com",
-
-  "currency": "NGN",
-
-  "description": "test desc",
-
-  "meta": "test meta",
-
-  "callback": "https://hydrogenpay.com",
-
- }
-
+{
+    "amount": "The amount to be charged for the transaction",
+    "customerName": "Dev Test",
+    "email": "devtest@randomuser.com",
+    "currency": "NGN",
+    "description": "test desc",
+    "meta": "test meta",
+    "callback": "https://hydrogenpay.com",
+  }
 ```
 
 **The script in processTransaction.php handles the request data via the TransactionController. If you are using a Framework like Laravel or CodeIgniter you might want to take a look at the TransactionController.** 
