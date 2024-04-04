@@ -11,14 +11,13 @@ use HydrogenpayAfrica\Entities\Payload;
 use HydrogenpayAfrica\Library\Modal;
 use HydrogenpayAfrica\Service\Transactions;
 
-final class PaymentController
+final class TransactionController
 {
     private string $requestMethod;
 
     private EventHandlerInterface $handler;
     private HydrogenpayAfrica $client;
     private string $modalType;
-
     protected array $routes = [
         'process' => 'POST',
         'callback' => 'GET'
@@ -44,7 +43,6 @@ final class PaymentController
     public function __call(string $name, array $args)
     {
         if ($this->routes[$name] !== $this->$requestMethod) {
-            // Todo: 404();
             echo "Unauthorized page!";
         }
         call_user_method_array($name, $this, $args);

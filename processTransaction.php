@@ -5,7 +5,7 @@ declare(strict_types=1);
 # if vendor file is not present, notify developer to run composer install.
 require __DIR__.'/vendor/autoload.php';
 
-use HydrogenpayAfrica\Controller\PaymentController;
+use HydrogenpayAfrica\Controller\TransactionController;
 use HydrogenpayAfrica\EventHandlers\ModalEventHandler as PaymentHandler;
 use HydrogenpayAfrica\HydrogenpayAfrica;
 use HydrogenpayAfrica\Library\Modal;
@@ -18,7 +18,7 @@ try {
     $customHandler = new PaymentHandler();
     $client = new HydrogenpayAfrica();
     $modalType = Modal::REDIRECT; // Modal::POPUP or Modal::REDIRECT
-    $controller = new PaymentController( $client, $customHandler, $modalType );
+    $controller = new TransactionController( $client, $customHandler, $modalType );
 } catch(\Exception $e ) {
     echo $e->getMessage();
 }

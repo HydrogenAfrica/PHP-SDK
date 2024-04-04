@@ -2,8 +2,8 @@
     "name": "hydrogenpay/hydrogenpay-sdk",
     "description": "A straightforward SDK for seamlessly integrating Hydrogenpay Payment Gateway into your PHP applications, including popular PHP frameworks such as Laravel, Symfony and Codeigniter",
     "type": "library",
-    "keywords": ["hydrogenpay", "hydrogenpay", "payment", "transfers", "africa", "card"],
-    "homepage": "https://github.com/Hydrogenpay-PHP-sdk",
+    "keywords": ["hydrogenpay", "payment gateway", "hydrogen", "payment", "transfers", "cards", "hydrogenafrica", "account transfer"],
+    "homepage": "https://github.com/php-sdk",
     "autoload": {
         "psr-4": {
             "HydrogenpayAfrica\\": "src/"
