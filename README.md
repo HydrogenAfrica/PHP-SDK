@@ -1,4 +1,3 @@
-Hydrogen PHP SDK (Including Frameworks - Laravel|Symfomy|Codeigniter)
 
 **Integrating Hydrogen PHP SDK Library for easy access to Hydrogen APIs**
 =========================================================================
