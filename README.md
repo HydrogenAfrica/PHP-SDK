@@ -3,11 +3,11 @@ Hydrogen PHP SDK (Including Frameworks - Laravel|Symfomy|Codeigniter)
 **Integrating Hydrogen PHP SDK Library for easy access to Hydrogen APIs**
 =========================================================================
 
-!\[Packagist Downloads\](https://img.shields.io/packagist/dt/hydrogenpay/hydrogenpay-sdk)
+![Packagist Downloads](https://img.shields.io/packagist/dt/hydrogenpay/hydrogenpay-sdk)
 
-!\[Packagist PHP Version Support\](https://img.shields.io/packagist/php-v/hydrogenpay/hydrogenpay-sdk)
+![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/hydrogenpay/hydrogenpay-sdk)
 
-!\[Packagist License\](https://img.shields.io/packagist/l/hydrogenpay/hydrogenpay-sdk)
+![Packagist License](https://img.shields.io/packagist/l/hydrogenpay/hydrogenpay-sdk)
 
 **Introduction**
 ================
@@ -28,51 +28,57 @@ Hydrogen PHP SDK (Including Frameworks - Laravel|Symfomy|Codeigniter)
 
 **Sign up account here:** [**https://dashboard.hydrogenpay.com/signup**](https://dashboard.hydrogenpay.com/signup) 
 
-**Installation** 
------------------
 
-**Step 1: To get started, First you need to install the package into your existing project.**
+**Installation** 
+=========================================================================
+
+**To get started, First you need to install the package into your existing project.**
 
 **To install the package via Composer, run the following command.**
 
-**\`\`\`shell**
+```shell**
 
-**composer require hydrogenpay/hydrogenpay-sdk**
+composer require hydrogenpay/hydrogenpay-sdk
 
-**\`\`\`**
+```
 
-**Alternatively, you can add the package to your composer.json file and run the command composer install on your editor terminal.\`\`\`json**
+**Alternatively, you can add the package to your composer.json file and run the command composer install on your editor terminal.**
 
- **{**
+```json
 
-    **"require": {**
+ {
 
-        **"hydrogenpay/hydrogenpay-sdk": "^1.0"**
+    "require": {
 
-    **}**
+        "hydrogenpay/hydrogenpay-sdk": "^1.0"
 
-**}**
+    }
 
-**\`\`\`**
+}
+
+```
 
 **This command installs the package. The package can be found in the vendor folder.if you get an error message while running the command, ensure you have composer installed.**
 
+
 **Initialization** 
--------------------
+===================
 
 **After installation, create a .env file in the root of the project. Most frameworks (such as Laravel and Symfony support the use of .env files). if you are not using a framework you need to create one.**
 
-**Create a .env file and follow the format of the .env.example file.Save your, TEST\_AUTH\_TOKEN, LIVE\_AUTH\_TOKEN, MODE  in the .env fileYour .env file should look like the below:\`\`\`env**
+**Create a .env file and follow the format of the .env.example file.Save your, TEST\_AUTH\_TOKEN, LIVE\_AUTH\_TOKEN, MODE  in the .env fileYour .env file should look like the below:**
 
-**TEST\_AUTH\_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX**
+```env
 
-**LIVE\_AUTH\_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX**
+TEST\_AUTH\_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-**MODE=test** 
+LIVE\_AUTH\_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-**\# MODE=live // test mode for payment testing and live mode is for production** 
+MODE=test
 
-**\`\`\`**
+# MODE=live // test mode for payment testing and live mode is for production
+
+```
 
 **The SDK provides two easy methods of making collections via the Payment Gateway modal.** 
 
@@ -81,32 +87,33 @@ Hydrogen PHP SDK (Including Frameworks - Laravel|Symfomy|Codeigniter)
 *   **POPUP**
     
 
-**\`\`\`php**
+```php
 
-**try {**
+try {
 
-    **Flutterwave::bootstrap();**
+    Flutterwave::bootstrap();
 
-    **$customHandler = new PaymentHandler();**
+    $customHandler = new PaymentHandler();
 
-    **$client = new Flutterwave();**
+    $client = new Flutterwave();
 
-    **$modalType = Modal::POPUP; // Modal::POPUP or Modal::STANDARD**
+    $modalType = Modal::POPUP; // Modal::POPUP or Modal::STANDARD
 
-    **$controller = new PaymentController( $client, $customHandler, $modalType );**
+    $controller = new PaymentController( $client, $customHandler, $modalType );
 
-**} catch(\\Exception $e ) {**
+} catch(\\Exception $e ) {
 
-    **echo $e->getMessage();**
+    echo $e->getMessage();
 
-**}**
+}
 
-**\`\`\`**
+```
 
 **Edit the processTransaction.php files to suite your purpose by either changing the Modal to POPUP or REDIRECT.**
 
+
 **Transaction Resources** 
---------------------------
+=========================================================================
 
 **Edit the transactionForm.php and processTransaction.php files to suit your purpose. Both files are well documented.**
 
@@ -114,282 +121,277 @@ Hydrogen PHP SDK (Including Frameworks - Laravel|Symfomy|Codeigniter)
 
 **In this implementation, we are expecting a form-encoded POST request.The request will contain the following parameters. Request parameters**
 
-**\# Request Parameters**
+# Request Parameters
 
-**| Mandatory | Name        | Comment                                               |**
+| Mandatory | Name        | Comment                                               |
+|-----------|-------------|-------------------------------------------------------|
+| Yes       | amount      | The amount to be charged for the transaction.         |
+| Yes       | email       | The customer's email address.                         |
+| Yes       | currency    | The currency in which the transaction is processed.   |
+| No        | description | A brief description of the transaction.               |
+| No        | meta        | Additional metadata or information related to the transaction. |
+| Yes       | callback    | Callback redirection
 
-**|-----------|-------------|-------------------------------------------------------|**
 
-**| Yes       | amount      | The amount to be charged for the transaction.         |**
+```json
 
-**| Yes       | email       | The customer's email address.                         |**
+ {
 
-**| Yes       | currency    | The currency in which the transaction is processed.   |**
+   "amount": 50,
 
-**| No       | description | A brief description of the transaction.               |**
+  "customerName": "Dev Test",
 
-**| No       | meta        | Additional metadata or information related to the transaction. |**
+  "email": "devtest@randomuser.com",
 
-**| Yes       | callback    | Callback redirection**
+  "currency": "NGN",
 
-**\`\`\`json**
+  "description": "test desc",
 
- **{**
+  "meta": "test meta",
 
-   **"amount": 50,**
+  "callback": "https://hydrogenpay.com",
 
-  **"customerName": "Dev Test",**
+ }
 
-  **"email": "devtest@randomuser.com",**
+```
 
-  **"currency": "NGN",**
+**The script in processTransaction.php handles the request data via the TransactionController. If you are using a Framework like Laravel or CodeIgniter you might want to take a look at the TransactionController.** 
 
-  **"description": "test desc",**
 
-  **"meta": "test meta",**
 
-  **"callback": "https://hydrogenpay.com",**
+```php
 
- **}**
+declare(strict\_types=1);
 
-**\`\`\`**
+namespace HydrogenpayAfrica\\Controller;
 
-**The script in processTransaction.php handles the request data via the TransactionController. If you are using a Framework like Laravel or CodeIgniter you might want to take a look at the TransactionController. Using Flutterwave SDK sample.** 
+use HydrogenpayAfrica\\EventHandlers\\ModalEventHandler;
 
-**Short Video Link: https://www.youtube.com/watch?v=LvtgfxfYPxA**
+use HydrogenpayAfrica\\EventHandlers\\EventHandlerInterface;
 
-**PHP SDK Dir: https://developer.flutterwave.com/docs/sdks-and-plugins/backend-libraries/**
+use HydrogenpayAfrica\\HydrogenpayAfrica;
 
-**PHP SDK V3:  https://github.com/Flutterwave/PHP-v3**
+use HydrogenpayAfrica\\Entities\\Payload;
 
-**Standard sdk: https://developer.flutterwave.com/docs/collecting-payments/overview**
+use HydrogenpayAfrica\\Library\\Modal;
 
-****\`\`\`php****
+use HydrogenpayAfrica\\Service\\Transactions;
 
-****declare(strict\_types=1);****
+final class TransactionController
 
-****namespace HydrogenpayAfrica\\Controller;****
+{
 
-****use HydrogenpayAfrica\\EventHandlers\\ModalEventHandler;****
+    private string $requestMethod;
 
-****use HydrogenpayAfrica\\EventHandlers\\EventHandlerInterface;****
+    private EventHandlerInterface $handler;
 
-****use HydrogenpayAfrica\\HydrogenpayAfrica;****
+    private HydrogenpayAfrica $client;
 
-****use HydrogenpayAfrica\\Entities\\Payload;****
+    private string $modalType;
 
-****use HydrogenpayAfrica\\Library\\Modal;****
+    protected array $routes = [
 
-****use HydrogenpayAfrica\\Service\\Transactions;****
+        'process' => 'POST',
 
-****final class TransactionController****
+        'callback' => 'GET'
 
-****{****
+    ];
 
-    ****private string $requestMethod;****
+    public function __construct(
 
-    ****private EventHandlerInterface $handler;****
+        HydrogenpayAfrica $client,
 
-    ****private HydrogenpayAfrica $client;****
+        EventHandlerInterface $handler,
 
-    ****private string $modalType;****
+        string $modalType
 
-    ****protected array $routes = \[****
+    ) {
 
-        ****'process' => 'POST',****
+        HydrogenpayAfrica::bootstrap();
 
-        ****'callback' => 'GET'****
+        $this->requestMethod =  $this->getRequestMethod();
 
-    ****\];****
+        $this->handler = $handler;
 
-    ****public function \_\_construct(****
+        $this->client = $client;
 
-        ****HydrogenpayAfrica $client,****
+        $this->modalType = $modalType;
 
-        ****EventHandlerInterface $handler,****
+    }
 
-        ****string $modalType****
+    private function getRequestMethod(): string
 
-    ****) {****
+    {
 
-        ****HydrogenpayAfrica::bootstrap();****
+        return ($_SERVER["REQUEST\_METHOD"] === "POST") ? 'POST' : 'GET';
 
-        ****$this->requestMethod =  $this->getRequestMethod();****
+    }
 
-        ****$this->handler = $handler;****
+    public function __call(string $name, array $args)
 
-        ****$this->client = $client;****
+    {
 
-        ****$this->modalType = $modalType;****
+        if ($this->routes[$name] !== $this->$requestMethod) {
 
-    ****}****
+            echo "Unauthorized page!";
 
-    ****private function getRequestMethod(): string****
+        }
 
-    ****{****
+        call_user_method_array($name, $this, $args);
 
-        ****return ($\_SERVER\["REQUEST\_METHOD"\] === "POST") ? 'POST' : 'GET';****
+    }
 
-    ****}****
+    private function handleSessionData(array $request)
 
-    ****public function \_\_call(string $name, array $args)****
+    {
 
-    ****{****
+        $_SESSION['success_url'] = $request['success_url'];
 
-        ****if ($this->routes\[$name\] !== $this->$requestMethod) {****
+        $_SESSION['failure_url'] = $request['failure_url'];
 
-            ****echo "Unauthorized page!";****
+        $_SESSION['amount'] = $request['amount'];
 
-        ****}****
+    }
 
-        ****call\_user\_method\_array($name, $this, $args);****
+    public function process(array $request)
 
-    ****}****
+    {
 
-    ****private function handleSessionData(array $request)****
+        $this->handleSessionData($request);
 
-    ****{****
+        try {
 
-        ****$\_SESSION\['success\_url'\] = $request\['success\_url'\];****
+            $_SESSION['p'] = $this->client;
 
-        ****$\_SESSION\['failure\_url'\] = $request\['failure\_url'\];****
+            if ('inline' === $this->modalType) {
 
-        ****$\_SESSION\['amount'\] = $request\['amount'\];****
+                echo $this->client
 
-    ****}****
+                    ->eventHandler($this->handler)
 
-    ****public function process(array $request)****
+                    ->render(Modal::POPUP)->with($request)->getHtml();
 
-    ****{****
+            } else {
 
-        ****$this->handleSessionData($request);****
+                $paymentLink = $this->client
 
-        ****try {****
+                    ->eventHandler($this->handler)
 
-            ****$\_SESSION\['p'\] = $this->client;****
+                    ->render(Modal::REDIRECT)->with($request)->getUrl();
 
-            ****if ('inline' === $this->modalType) {****
+                header('Location: ' . $paymentLink);
 
-                ****echo $this->client****
+            }
 
-                    ****->eventHandler($this->handler)****
+        } catch (\Exception $e) {
 
-                    ****->render(Modal::POPUP)->with($request)->getHtml();****
+            echo $e->getMessage();
 
-            ****} else {****
+        }
 
-                ****$paymentLink = $this->client****
+    }
 
-                    ****->eventHandler($this->handler)****
+    public function callback(array $request)
 
-                    ****->render(Modal::REDIRECT)->with($request)->getUrl();****
+    {
 
-                ****header('Location: ' . $paymentLink);****
+        $transactionRef = $request['TransactionRef'];
 
-            ****}****
+        if (empty($transactionRef)) {
 
-        ****} catch (\\Exception $e) {****
+            session_destroy();
 
-            ****echo $e->getMessage();****
+        }
 
-        ****}****
+        if (!isset($_SESSION['p'])) {
 
-    ****}****
+            echo "session expired!. please refresh you browser.";
 
-    ****public function callback(array $request)****
+            exit();
 
-    ****{****
+        }
 
-        ****$transactionRef = $request\['TransactionRef'\];****
+        $payment = $_SESSION\['p'];
 
-        ****if (empty($transactionRef)) {****
+        $payment::bootstrap();
 
-            ****session\_destroy();****
+        if (isset($request['TransactionRef'])) {
 
-        ****}****
+            $transactionRef = $request\['TransactionRef'\];
 
-        ****if (!isset($\_SESSION\['p'\])) {****
+            $payment->logger->notice('Payment completed. Now requerying payment.');
 
-            ****echo "session expired!. please refresh you browser.";****
+            $payment
 
-            ****exit();****
+                ->eventHandler($this->handler)****
 
-        ****}****
+                ->requeryTransaction($transactionRef);
 
-        ****$payment = $\_SESSION\['p'\];****
+        }
 
-        ****$payment::bootstrap();****
+    }
 
-        ****if (isset($request\['TransactionRef'\])) {****
+}
 
-            ****$transactionRef = $request\['TransactionRef'\];****
+```
 
-            ****$payment->logger->notice('Payment completed. Now requerying payment.');****
 
-            ****$payment****
+**Verifying Transaction**
+=========================
 
-                ****->eventHandler($this->handler)****
+```php
 
-                ****->requeryTransaction($transactionRef);****
-
-        ****}****
-
-    ****}****
-
-****}****
-
-****\`\`\`****
-
-****Verifying Transaction\`\`\`php****
-
-****$request = $\_GET;****
-
-****\# Verifying Transaction.****
-
-****if(isset($request\['TransactionRef'\])) {****
-
-    ****$controller->callback( $request );****
-
-****} else {****
-
-****}****
-
-****exit();****
-
-****\`\`\`****
-
-****\`\`\`****
-
-            
-
-            
-
-****\`\`\`****
-
-****In transactionFrom.php, you can pass your desired URL for your project in the value:****
-
-*   ****Callback: Redirect URL after payment has been completed on the gateway.****
+$request = $_GET;
+# Confirming Payment.
+if(isset($request['TransactionRef'])) {
+    $controller->callback( $request );
+} else {
     
-*   ****Success\_url : Redirect URL for Payment Success****
+}
+exit();
+
+```
+
+```html
+<input type="hidden" name="callback" value="http://hydrogenpay_php_sdk.test/processTransaction.php">
+
+<input type="hidden" name="success_url" value="https://hydrogenpay.com">
+
+<input type="hidden" name="failure_url" value="https://docs.hydrogenpay.com/docs/getting-started">
+
+```
+                   
+
+**In transactionFrom.php, you can pass your desired URL for your project in the value:**
+
+*   **Callback: Redirect URL after payment has been completed on the gateway.**
     
-*   ****Failure\_url : Redirect URL for Payment Failed****
+*   **Success_url : Redirect URL for Payment Success**
+    
+*   **Failure_url : Redirect URL for Payment Failed**
     
 
-****TestingAll of the SDK's tests are written with PHP's phpunit module.**** 
 
-****Features****
 
-*   ****Accept payment via Mastercard, Visa, Verve, and Bank Account.****
+
+**Features**
+============
+
+*   **Accept payment via Mastercard, Visa, Verve, and Bank Account.**
     
-*   ****Seamless integration into your site checkout page. Accept payment directly on your site.****
+*   **Seamless integration into your site checkout page. Accept payment directly on your site.**
+
     
 
-****License****
+**License**
+==============
 
-**The MIT License (MIT). Please see License file for more information.**
+*The MIT License (MIT). Please see License file for more information.*
 
-****Hydrogenpay Api References****
 
- ****- \[Hydrogenpay API Documentation\](https://docs.hydrogenpay.com/reference/api-authentication)****
+**Hydrogenpay Api References**
+===============================
 
-****\- \[Hydrogenpay Dashboard\](https://dashboard.hydrogenpay.com/merchant/profile/api-integration)****
+ - [Hydrogenpay API Documentation](https://docs.hydrogenpay.com/reference/api-authentication)
+
+ - [Hydrogenpay Dashboard](https://dashboard.hydrogenpay.com/merchant/profile/api-integration)
