@@ -292,13 +292,13 @@ final class TransactionController
 
         }
 
-        $payment = $_SESSION\['p'];
+        $payment = $_SESSION['p'];
 
         $payment::bootstrap();
 
         if (isset($request['TransactionRef'])) {
 
-            $transactionRef = $request\['TransactionRef'\];
+            $transactionRef = $request['TransactionRef'\];
 
             $payment->logger->notice('Payment completed. Now requerying payment.');
 
