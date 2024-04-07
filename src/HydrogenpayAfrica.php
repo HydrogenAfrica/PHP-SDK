@@ -190,7 +190,7 @@ class HydrogenpayAfrica extends AbstractPayment
     }
 
     /**
-     * Initiates a requery for a previous transaction from the Hydrogen payment gateway
+     * Requery initiation for a previous transaction from the hydrogen payment gateway
      *
      * @param  string $transactionRef This should be the reference number of the transaction you want to requery
      * @throws ClientExceptionInterface
@@ -198,46 +198,52 @@ class HydrogenpayAfrica extends AbstractPayment
      */
     public function requeryTransaction(string $transactionRef): object
     {
+        // Transaction reference for the requery
         $this->transactionRef = $transactionRef;
-        $this->requeryCount++;
+
+        // Requery attempt log
         $this->logger->notice('Requerying Transaction....' . $this->transactionRef);
+
+        // Call the requery handler if it is set
         if (isset($this->handler)) {
             $this->handler->onRequery($this->transactionRef);
         }
 
+        // Data Prepare for the requery
         $data = [
             'transactionRef' => $transactionRef,
         ];
 
+        // Sending a POST request
         $response = $this->postURL(static::$config, $data);
 
-        $test = $responseObj = (object) [
-            'status' => $response, // Assuming 'Paid' or 'Failed' is the status
-            'data' => [
-                'amount' => 100.00, // Example additional data
-                'currency' => 'USD'
-            ]
+        // Response to determine the status of the transaction
+        $transConfirmation = $responseObj = (object) [
+            'status' => $response, // Paid or Failed
         ];
 
-        if ($test->status == 'Paid') {
-
+        // Check if the transaction was successful or failed
+        if ($transConfirmation->status == 'Paid') {
             $this->logger->notice('Requeryed a successful transaction....' . $response);
-            // Handle successful.
-            if (isset($this->handler)) {
-                $this->handler->onSuccessful($test->status);
-            }
-        } else {
-            // Handle Failure
 
+            // Handle successful transaction
+            if (isset($this->handler)) {
+                $this->handler->onSuccessful($transConfirmation->status);
+            }
+        } elseif ($transConfirmation->status == 'Failed') {
+            // Log failed requery
             $this->logger->warning('Requeryed a failed transaction....' . $response);
 
+            // Handle failed transaction
             if (isset($this->handler)) {
-                $this->handler->onFailure($test->status);
+                $this->handler->onFailure($transConfirmation->status);
             }
         }
 
+        // Return method
         return $this;
     }
+
 
     public function initialize(): void
     {

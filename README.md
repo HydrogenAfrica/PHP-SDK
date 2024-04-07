@@ -268,6 +268,64 @@ if(isset($request['TransactionRef'])) {
 
 ```
 
+```php
+
+    /**
+     * Requery initiation for a previous transaction from the hydrogen payment gateway
+     * @param  string $transactionRef This should be the reference number of the transaction you want to requery
+     * @throws ClientExceptionInterface
+     * @throws ApiException
+     */
+    public function requeryTransaction(string $transactionRef): object
+    {
+        // Transaction reference
+        $this->transactionRef = $transactionRef;
+
+        // Log requery attempt
+        $this->logger->notice('Requerying Transaction....' . $this->transactionRef);
+
+        // Call the requery handler if it is set
+        if (isset($this->handler)) {
+            $this->handler->onRequery($this->transactionRef);
+        }
+
+        // Data Prepare for the requery
+        $data = [
+            'transactionRef' => $transactionRef,
+        ];
+
+        // Sending a POST request
+        $response = $this->postURL(static::$config, $data);
+
+        // Response to determine the status of the transaction
+        $transConfirmation = $responseObj = (object) [
+            'status' => $response, // Paid or Failed
+        ];
+
+        // Check if the transaction was successful or failed
+        if ($transConfirmation->status == 'Paid') {
+            $this->logger->notice('Requeryed a successful transaction....' . $response);
+
+            // Handle successful transaction
+            if (isset($this->handler)) {
+                $this->handler->onSuccessful($transConfirmation->status);
+            }
+        } elseif ($transConfirmation->status == 'Failed') {
+            // Log failed requery
+            $this->logger->warning('Requeryed a failed transaction....' . $response);
+
+            // Handle failed transaction
+            if (isset($this->handler)) {
+                $this->handler->onFailure($transConfirmation->status);
+            }
+        }
+
+        // Return method
+        return $this;
+    }
+
+```
+
 ```html
 
     <!-- Enter the URL where you want your customers to be redirected after completing the payment process. 
@@ -292,6 +350,22 @@ if(isset($request['TransactionRef'])) {
 *   **Failure_url : Redirect URL for Payment Failed**
     
 
+**Test**
+==============
+
+*All of the SDK's tests are written with PHP's phpunit module*
+*Navigate to the SDK directory:*
+```bash
+cd hydrogenpay/hydrogenpay-sdk
+```
+*Install PHPUnit as a development dependency using Composer:*
+```bash
+composer require --dev phpunit/phpunit
+```
+*Run PHPUnit to execute the tests:*
+```bash
+./vendor/bin/phpunit
+```
 
 
 
