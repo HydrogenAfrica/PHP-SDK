@@ -26,7 +26,6 @@ class PayloadFactory implements FactoryInterface
             );
         }
 
-        // $txRef = $data['tx_ref'];
         $customerName = $data['customerName'];
         $customerEmail = $data['email'];
         $amount = $data['amount'];
@@ -46,8 +45,6 @@ class PayloadFactory implements FactoryInterface
 
         return $payload;
     }
-
-
     public function validSuppliedData(array $data): array
     {
         $params = $this->requiredParams;

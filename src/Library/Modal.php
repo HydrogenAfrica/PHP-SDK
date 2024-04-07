@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace HydrogenpayAfrica\Library;
 
 use HydrogenpayAfrica\EventHandlers\EventHandlerInterface;
-use HydrogenpayAfrica\Helper\CheckoutHelper;
+use HydrogenpayAfrica\Helper\TransactionHelper;
 use HydrogenpayAfrica\Service\Service as Http;
 use HydrogenpayAfrica\Entities\Payload;
 use Psr\Log\LoggerInterface;
@@ -84,16 +84,16 @@ final class Modal
 
         $hdrogenInlineScript = ($mode == 'test') ? $testInlineScript : $liveInlineScript;
 
-        $this->payload->set('payload_hash', CheckoutHelper::generateHash($dataToHash, $key));
-        $this->payload->set('payload_url', CheckoutHelper::generatePayloadUrl($dataToHash, $hdrogenUrl));
-        $this->payload->set('payload_inline', CheckoutHelper::generatePayloadUrl($dataToHash, $hdrogenInlineScript));
+        $this->payload->set('payload_hash', TransactionHelper::generateHash($dataToHash, $key));
+        $this->payload->set('payload_url', TransactionHelper::generatePayloadUrl($dataToHash, $hdrogenUrl));
+        $this->payload->set('payload_inline', TransactionHelper::generatePayloadUrl($dataToHash, $hdrogenInlineScript));
         return $this;
     }
 
     public function getHtml()
     {
         if ($this->type !== self::POPUP) {
-            return $this->returnUrl();
+            return $this->getUrl();
         }
 
         $payloadArray = is_array($this->payload) ? $this->payload : $this->payload->toArray('modal');
@@ -122,7 +122,7 @@ final class Modal
     {
 
         if ($this->type !== self::REDIRECT) {
-            return $this->returnHtml();
+            return $this->getHtml();
         }
 
         $payload         = $this->payload->toArray('modal');

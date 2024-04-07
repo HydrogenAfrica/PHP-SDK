@@ -66,7 +66,6 @@ class Config implements ConfigInterface
     {
         return $this->http ?? new Client();
     }
-
     public function getLoggerInstance(): LoggerInterface
     {
         return $this->logger;
@@ -75,7 +74,6 @@ class Config implements ConfigInterface
     {
         return $this->public;
     }
-
     public function getSecretKey(): string
     {
         return $this->secret;

@@ -19,33 +19,23 @@ use function is_null;
 
 final class PackageConfig extends AbstractConfig implements ConfigInterface
 {
-    // private function __construct(string $secretKey, string $publicKey, string $encryptKey, string $env)
     private function __construct(string $secretKey, string $publicKey, string $mode)
 
     {
-        // parent::__construct($secretKey, $publicKey, $encryptKey, $env);
         parent::__construct($secretKey, $publicKey, $mode);
 
         $this->logger->pushHandler(new RotatingFileHandler(__DIR__ . "../../../../../../" . self::LOG_FILE_NAME, 90));
     }
-
-    // public static function setUp(string $secretKey, string $publicKey, string $enc, string $env): ConfigInterface
     public static function setUp(string $secretKey, string $publicKey, string $mode): ConfigInterface
 
     {
 
         if (is_null(self::$instance)) {
-            // return new self($secretKey, $publicKey, $enc, $env);
             return new self($secretKey, $publicKey, $mode);
 
         }
         return self::$instance;
     }
-
-    // public function getEncryptkey(): string
-    // {
-    //     return $this->enc;
-    // }
 
     public function getPublicKey(): string
     {

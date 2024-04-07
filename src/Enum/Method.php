@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HydrogenpayAfrica\Enum;
 
-//use Cerbero\Enum\Concerns\Enumerates;
+// use Cerbero\Enum\Concerns\Enumerates;
 
 enum Method: string
 {

@@ -42,19 +42,19 @@ final class TransactionController
 
     public function __call(string $name, array $args)
     {
-        if ($this->routes[$name] !== $this->$requestMethod) {
+        if ($this->routes[$name] !== $this->requestMethod) {
+
             echo "Unauthorized page!";
         }
-        call_user_method_array($name, $this, $args);
+
+        call_user_func_array(array($this, $name), $args);
     }
 
     private function handleSessionData(array $request)
     {
         $_SESSION['success_url'] = $request['success_url'];
         $_SESSION['failure_url'] = $request['failure_url'];
-        $_SESSION['amount'] = $request['amount'];
     }
-
     public function process(array $request)
     {
         $this->handleSessionData($request);
