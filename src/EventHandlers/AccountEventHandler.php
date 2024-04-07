@@ -77,7 +77,7 @@ class AccountEventHandler implements EventHandlerInterface
     }
 
     /**
-     * This is called when a transaction doesn't return with a success or a failure response. This can be a timedout transaction on the Rave server or an abandoned transaction by the customer.
+     * This is called when a transaction doesn't return with a success or a failure response. This can be a timedout transaction on the hydrogen server or an abandoned transaction by the customer.
      * */
     public function onTimeout($transactionReference, $data): void
     {

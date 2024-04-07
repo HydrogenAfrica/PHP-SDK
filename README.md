@@ -81,20 +81,19 @@ MODE=test
 ```php
 
 try {
+    HydrogenpayAfrica::bootstrap();
 
-    Flutterwave::bootstrap();
+    $customHandler = new PaymentHandler();
 
-    $customHandler = new PaymentHandler();
+    $client = new HydrogenpayAfrica();
 
-    $client = new Flutterwave();
+    $modalType = Modal::REDIRECT; // Modal::POPUP or Modal::REDIRECT
 
-    $modalType = Modal::POPUP; // Modal::POPUP or Modal::STANDARD
-
-    $controller = new PaymentController( $client, $customHandler, $modalType );
+    $controller = new TransactionController( $client, $customHandler, $modalType );
 
 } catch(\Exception $e ) {
 
-    echo $e->getMessage();
+    echo $e->getMessage();
 
 }
 
@@ -186,19 +185,19 @@ final class TransactionController
 
     public function __call(string $name, array $args)
     {
-        if ($this->routes[$name] !== $this->$requestMethod) {
+        if ($this->routes[$name] !== $this->requestMethod) {
+
             echo "Unauthorized page!";
         }
-        call_user_method_array($name, $this, $args);
+
+        call_user_func_array(array($this, $name), $args);
     }
 
     private function handleSessionData(array $request)
     {
         $_SESSION['success_url'] = $request['success_url'];
         $_SESSION['failure_url'] = $request['failure_url'];
-        $_SESSION['amount'] = $request['amount'];
     }
-
     public function process(array $request)
     {
         $this->handleSessionData($request);
@@ -260,22 +259,26 @@ final class TransactionController
 ```php
 
 $request = $_GET;
-# Confirming Payment.
+# Confirming Transaction.
 if(isset($request['TransactionRef'])) {
     $controller->callback( $request );
 } else {
     
 }
-exit();
 
 ```
 
 ```html
-<input type="hidden" name="callback" value="http://hydrogenpay_php_sdk.test/processTransaction.php">
 
-<input type="hidden" name="success_url" value="https://hydrogenpay.com">
+    <!-- Enter the URL where you want your customers to be redirected after completing the payment process. 
+        Ensure that this URL routes to your 'processTransaction.php' file. -->
+    <input type="hidden" name="callback" value="https://yourwebsite.com/processTransaction.php">
 
-<input type="hidden" name="failure_url" value="https://docs.hydrogenpay.com/docs/getting-started">
+    <!-- Enter the URL where you want your customers to be redirected after a successful transaction. -->
+    <input type="hidden" name="success_url" value="https://yourwebsite.com/?status=success">
+
+    <!-- Enter the URL where you want your customers to be redirected if the transaction fails. -->
+    <input type="hidden" name="failure_url" value="https://yourwebsite.com/?status=failed">
 
 ```
                    

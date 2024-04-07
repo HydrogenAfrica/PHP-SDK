@@ -144,7 +144,7 @@ class HydrogenpayAfrica extends AbstractPayment
      * Sets the payment page button text
      *
      * @param string $payButtonText This is the text that should appear
-     *                              on the payment button on the Rave payment gateway.
+     *                              on the payment button on the hydrogen payment gateway.
      */
     public function setPayButtonText(string $payButtonText): object
     {
@@ -190,7 +190,7 @@ class HydrogenpayAfrica extends AbstractPayment
     }
 
     /**
-     * Requerys a previous transaction from the Rave payment gateway
+     * Initiates a requery for a previous transaction from the Hydrogen payment gateway
      *
      * @param  string $transactionRef This should be the reference number of the transaction you want to requery
      * @throws ClientExceptionInterface
