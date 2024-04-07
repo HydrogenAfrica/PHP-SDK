@@ -62,8 +62,6 @@ final class Modal
             'callback' => $args['callback'],
         ]);
 
-        $this->payload->set('redirect_url', $args['redirect_url']);
-
         $dataToHash = [
             'amount' => $args['amount'],
             'currency' => 'NGN',
@@ -117,7 +115,6 @@ final class Modal
         $html .= '</html>';
         return $html;
     }
-
     public function getUrl()
     {
 

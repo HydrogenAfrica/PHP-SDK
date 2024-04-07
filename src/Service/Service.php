@@ -172,16 +172,6 @@ class Service implements ServiceInterface
         return json_decode($body);
     }
 
-    protected function checkTransactionId($transactionId): void
-    {
-        $pattern = '/([0-9]){7}/';
-        $is_valid = preg_match_all($pattern, $transactionId);
-
-        if (!$is_valid) {
-            $this->logger->warning('Transaction Service::cannot verify invalid transaction id. ');
-            throw new InvalidArgumentException('cannot verify invalid transaction id.');
-        }
-    }
     private static function bootstrap(?ConfigInterface $config = null): void
     {
         if (is_null($config)) {

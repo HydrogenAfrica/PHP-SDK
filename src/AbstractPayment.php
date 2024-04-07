@@ -23,13 +23,10 @@ abstract class AbstractPayment
     public string $transactionRef;
     public $type;
     public LoggerInterface $logger;
-    //    protected ?string $integrityHash = null;
     protected string $payButtonText = 'Proceed with Payment';
     protected string $redirectUrl;
     protected array $meta = [];
-    //protected $env;
     protected string $transactionPrefix;
-    // public $logger;
     protected EventHandlerInterface $handler;
     protected string $baseUrl;
     protected string $transactionData;
@@ -38,21 +35,19 @@ abstract class AbstractPayment
     protected static ?array $methods = null;
 
     //Payment information
+
+    protected string $amount;
+    protected $description;
+    protected $country;
+    protected $currency;
+    protected $email;
+    protected $customerName;
+    protected $callback;
     protected $account;
     protected $key;
     protected $pin;
     protected $options;
-    protected string $amount;
     protected $paymentOptions = null;
-    protected $customDescription;
-    protected $customLogo;
-    protected $customTitle;
-    protected $country;
-    protected $currency;
-    protected $customerEmail;
-    protected $customerFirstname;
-    protected $customerLastname;
-    protected $customerPhone;
 
     //EndPoints
     protected string $end_point;
@@ -64,7 +59,6 @@ abstract class AbstractPayment
         $this->transactionPrefix = self::$config::DEFAULT_PREFIX . '_';
         $this->baseUrl = EnvVariables::BASE_URL;
     }
-
     public function getConfig()
     {
         return self::$config;

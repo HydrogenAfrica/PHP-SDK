@@ -13,7 +13,7 @@ use HydrogenpayAfrica\Traits\Setup\Configure;
 use HydrogenpayAfrica\Library\Modal;
 use Psr\Http\Client\ClientExceptionInterface;
 
-define('FLW_PHP_ASSET_DIR', __DIR__ . '../assets/');
+define('HY_PHP_ASSET_DIR', __DIR__ . '/../assets/');
 
 /**
  * Hydrogenpay PHP SDK
@@ -36,20 +36,10 @@ class HydrogenpayAfrica extends AbstractPayment
     public function __construct()
     {
         parent::__construct();
-        // $this->checkPageIsSecure(); Comment out due to env
-        // create a log channel
         $this->logger = self::$config->getLoggerInstance();
         $this->createReferenceNumber();
         $this->logger->notice('Main Class Initializes....');
     }
-
-    // private function checkPageIsSecure() Comment out due to env
-    // {
-    //     if(!CheckCompatibility::isSsl() && 'production' === $this->getConfig()->getEnv()) {
-
-    //         throw new \Exception('HydrogenpayAfrica: cannot load checkout modal on an unsecure page - no SSL detected. ');
-    //     }
-    // }
 
     /**
      * Sets the transaction amount
@@ -86,41 +76,30 @@ class HydrogenpayAfrica extends AbstractPayment
     /**
      * Sets the transaction description
      *
-     * @param string $customDescription The description of the transaction
+     * @param string $description The description of the transaction
      */
-    public function setDescription(string $customDescription): object
+    public function setDescription(string $description): object
     {
-        $this->customDescription = $customDescription;
+        $this->description = $description;
         return $this;
     }
 
     /**
-     * Sets the payment page logo
+     * Sets the payment page customer name
      *
-     * @param string $customLogo Your Logo
-     */
-    public function setLogo(string $customLogo): object
-    {
-        $this->customLogo = $customLogo;
-        return $this;
-    }
-
-    /**
-     * Sets the payment page title
-     *
-     * @param string $customTitle A title for the payment.
+     * @param string $customerName A title for the payment.
      *                            It can be the product name, your business name or anything short and descriptive
      */
-    public function setTitle(string $customTitle): object
+    public function setTitle(string $customerName): object
     {
-        $this->customTitle = $customTitle;
+        $this->customerName = $customerName;
         return $this;
     }
 
     /**
      * Sets transaction country
      *
-     * @param string $country The transaction country. Can be NG, US, KE, GH and ZA
+     * @param string $country The transaction country. Can be NG, US
      */
     public function setCountry(string $country): object
     {
@@ -131,7 +110,7 @@ class HydrogenpayAfrica extends AbstractPayment
     /**
      * Sets the transaction currency
      *
-     * @param string $currency The transaction currency. Can be NGN, GHS, KES, ZAR, USD, EUR and GBP
+     * @param string $currency The transaction currency. Can be NGN, GHS, KES, ZAR, USD
      */
     public function setCurrency(string $currency): object
     {
@@ -144,42 +123,20 @@ class HydrogenpayAfrica extends AbstractPayment
      *
      * @param string $customerEmail This is the paying customer's email
      */
-    public function setEmail(string $customerEmail): object
+    public function setEmail(string $email): object
     {
-        $this->customerEmail = $customerEmail;
+        $this->email = $email;
         return $this;
     }
 
     /**
      * Sets the customer firstname
      *
-     * @param string $customerFirstname This is the paying customer's firstname
+     * @param string $callback This is the paying customer's firstname
      */
-    public function setFirstname(string $customerFirstname): object
+    public function setCallback(string $callback): object
     {
-        $this->customerFirstname = $customerFirstname;
-        return $this;
-    }
-
-    /**
-     * Sets the customer lastname
-     *
-     * @param string $customerLastname This is the paying customer's lastname
-     */
-    public function setLastname(string $customerLastname): object
-    {
-        $this->customerLastname = $customerLastname;
-        return $this;
-    }
-
-    /**
-     * Sets the customer phonenumber
-     *
-     * @param string $customerPhone This is the paying customer's phonenumber
-     */
-    public function setPhoneNumber(string $customerPhone): object
-    {
-        $this->customerPhone = $customerPhone;
+        $this->callback = $callback;
         return $this;
     }
 
@@ -249,16 +206,10 @@ class HydrogenpayAfrica extends AbstractPayment
         }
 
         $data = [
-            // 'id' => (int) $transactionRef,
             'transactionRef' => $transactionRef,
         ];
 
-        $url = '/transactions/' . $data['transactionRef'] . '/verify';
-
         $response = $this->postURL(static::$config, $data);
-
-        //check the status is Paid of Failed.
-        // if ($response->status === 'success') {
 
         $test = $responseObj = (object) [
             'status' => $response, // Assuming 'Paid' or 'Failed' is the status
@@ -275,7 +226,7 @@ class HydrogenpayAfrica extends AbstractPayment
             if (isset($this->handler)) {
                 $this->handler->onSuccessful($test->status);
             }
-        } else { // Use elseif instead of else
+        } else {
             // Handle Failure
 
             $this->logger->warning('Requeryed a failed transaction....' . $response);
@@ -290,24 +241,20 @@ class HydrogenpayAfrica extends AbstractPayment
 
     public function initialize(): void
     {
-        $this->createCheckSum();
-
         $this->logger->info('Rendering Payment Modal..');
 
         echo '<html lang="en">';
         echo '<body>';
-        echo '<div style="display: flex; flex-direction: row;justify-content: center; align-content: center ">
-    Proccessing...<img src="../assets/images/ajax-loader.gif"  alt="loading-gif"/></div>';
         echo '<script type="text/javascript" src="https://hydrogenshared.blob.core.windows.net/paymentgateway/paymentGatewayInegration.js"></script>';
         echo '<script>';
         echo 'document.addEventListener("DOMContentLoaded", function(event) {';
         echo 'let obj = {
         amount: ' . $this->amount . ',
-        email: "' . $this->customerEmail . '",
+        email: "' . $this->email . '",
         currency: "' . $this->currency . '",
-        description: "' . $this->customDescription . '",
-        meta: "' . $this->customTitle . '",
-        callback: "' . $this->redirectUrl . '",
+        description: "' . $this->description . '",
+        meta: "' . $this->customerName . '",
+        callback: "' . $this->callback . '",
         isAPI: false,
     };';
 
@@ -322,11 +269,11 @@ class HydrogenpayAfrica extends AbstractPayment
         amount: ' . $this->amount . ',
         currency: "' . $this->currency . '",
         country: "' . $this->country . '",
-        callback:"' . $this->redirectUrl . '",
-        email: "' . $this->customerEmail . '",
-        customerName: "' . $this->customerFirstname . ' ' . $this->customerLastname . '",
-        meta: "' . $this->customTitle . '",
-        description: "' . $this->customDescription . '",
+        callback:"' . $this->callback . '",
+        email: "' . $this->email . '",
+        customerName: "' . $this->customerName . '",
+        meta: "' . $this->customerName . '",
+        description: "' . $this->description . '",
     });';
 
         echo 'openDialogModal();'; // Trigger the openDialogModal function
@@ -338,6 +285,7 @@ class HydrogenpayAfrica extends AbstractPayment
 
         $this->logger->info('Rendered Payment Modal Successfully..');
     }
+
 
     /**
      * Handle canceled payments with this method
@@ -352,7 +300,6 @@ class HydrogenpayAfrica extends AbstractPayment
         }
         return $this;
     }
-
     public static function setUp(array $config): void
     {
         self::$config = ForkConfig::setUp(
@@ -362,11 +309,10 @@ class HydrogenpayAfrica extends AbstractPayment
 
         );
     }
-
     public function render(string $modalType): Modal
     {
         $data = [
-            'tx_ref' => $this->txref,
+            'transactionRef' => $this->transactionPrefix, //Tod
         ];
         return new Modal($modalType, $data, $this->getEventHandler(), self::$config);
     }

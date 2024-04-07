@@ -12,14 +12,12 @@ class Payload implements EntityInterface
     public const REDIRECT = 'redirect';
     public const NOAUTH = 'noauth';
     public const AVS = 'avs';
-
     protected array $data = [];
-
     protected ?string $type = null;
 
     public function get(string $param)
     {
-        if (! $this->has($param)) {
+        if (!$this->has($param)) {
             return null;
         }
         return $this->data[$param];
@@ -37,7 +35,7 @@ class Payload implements EntityInterface
 
     public function delete(string $param, array $assoc_option = []): void
     {
-        if (! isset($param)) {
+        if (!isset($param)) {
             return;
         }
 
@@ -68,19 +66,19 @@ class Payload implements EntityInterface
         }
 
         switch ($payment_method) {
-        case 'card':
-            $card_details = $additionalData['card_details'];
-            unset($additionalData['card_details']);
-            $data = array_merge($data, $additionalData, $customer->toArray(), $card_details);
-            break;
-        case 'account':
-            $account_details = $additionalData['account_details'];
-            unset($additionalData['account_details']);
-            $data = array_merge($data, $additionalData, $customer->toArray(), $account_details);
-            break;
-        default:
-            $data = array_merge($data, $additionalData, $customer->toArray());
-            break;
+            case 'card':
+                $card_details = $additionalData['card_details'];
+                unset($additionalData['card_details']);
+                $data = array_merge($data, $additionalData, $customer->toArray(), $card_details);
+                break;
+            case 'account':
+                $account_details = $additionalData['account_details'];
+                unset($additionalData['account_details']);
+                $data = array_merge($data, $additionalData, $customer->toArray(), $account_details);
+                break;
+            default:
+                $data = array_merge($data, $additionalData, $customer->toArray());
+                break;
         }
 
         if ($payment_method === 'modal') {
@@ -127,7 +125,7 @@ class Payload implements EntityInterface
 
     public function has(string $param): bool
     {
-        if (! isset($this->data[$param])) {
+        if (!isset($this->data[$param])) {
             return false;
         }
         return true;
@@ -140,8 +138,8 @@ class Payload implements EntityInterface
 
     public function generateTxRef(): void
     {
-        if ($this->has('tx_ref')) {
-            $this->set('tx_ref', 'FLWPHP|' . (mt_rand(2, 101) + time()));
+        if ($this->has('TransactionRef')) {
+            $this->set('TransactionRef', 'HYPHP|' . (mt_rand(2, 101) + time()));
         }
     }
 }

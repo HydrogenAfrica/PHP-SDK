@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHP|Laravel|Codeigniter SDK Implementation</title>
+    <title>PHP|Laravel SDK Implementation</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
@@ -52,11 +52,15 @@
                 <input type="text" class="form-control" id="meta" name="meta">
             </div>
 
-            <input type="hidden" name="callback" value="http://hydrogenpay_php_sdk.test/processTransaction.php">
+            <!-- Enter the URL where you want your customers to be redirected after completing the payment process. 
+            Ensure that this URL routes to your 'processTransaction.php' file. -->
+            <input type="hidden" name="callback" value="https://yourwebsite.com/processTransaction.php">
 
-            <input type="hidden" name="success_url" value="http://hydrogenpay_php_sdk.test/processTransaction.php?status=success">
+            <!-- Enter the URL where you want your customers to be redirected after a successful transaction. -->
+            <input type="hidden" name="success_url" value="https://yourwebsite.com/?status=success">
 
-            <input type="hidden" name="failure_url" value="http://hydrogenpay_php_sdk.test/processTransaction.php?status=failed">
+            <!-- Enter the URL where you want your customers to be redirected if the transaction fails. -->
+            <input type="hidden" name="failure_url" value="https://yourwebsite.com/?status=failed">
 
             <button type="submit" class="btn btn-primary" name="processPayment">Send Payment</button>
         </form>

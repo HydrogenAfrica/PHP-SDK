@@ -25,7 +25,6 @@ try {
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $request = $_REQUEST;
-    $request['redirect_url'] = $_SERVER['HTTP_ORIGIN'] . $_SERVER['REQUEST_URI'];
     try {
         $controller->process( $request );
     } catch(\Exception $e) {
@@ -34,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 
 $request = $_GET;
-# Confirming Payment.
+# Confirming Transaction.
 if(isset($request['TransactionRef'])) {
     $controller->callback( $request );
 } else {

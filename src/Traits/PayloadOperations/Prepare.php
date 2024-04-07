@@ -21,32 +21,4 @@ trait Prepare
         return $this;
     }
 
-    /**
-     * Generates a checksum value for the information to be sent to the payment gateway
-     * */
-    public function createCheckSum(): void
-    {
-        $this->logger->notice('Generating Checksum....');
-        $options = [
-            'live_auth_token' => self::$config->getPublicKey(),
-            'amount' => $this->amount,
-            'tx_ref' => $this->txref,
-            'currency' => $this->currency,
-            'payment_options' => 'card,mobilemoney,ussd',
-            'customer' => [
-                'email' => $this->customerEmail,
-                'phone_number' => $this->customerPhone,
-                'name' => $this->customerFirstname . ' ' . $this->customerLastname,
-            ],
-            'redirect_url' => $this->redirectUrl,
-            'customizations' => [
-                'description' => $this->customDescription,
-                'logo' => $this->customLogo,
-                'title' => $this->customTitle,
-            ],
-        ];
-
-        ksort($options);
-
-    }
 }
