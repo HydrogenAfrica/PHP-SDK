@@ -2,7 +2,8 @@
 **Integrating Hydrogen PHP SDK Library for easy access to Hydrogen APIs**
 =========================================================================
 
-**Hydrogen Payment Gateway helps you process payments using cards and account transfers for faster delivery of goods and services on your PHP site.PHP Library provides easy access to Hydrogen APIs from php apps. It abstracts the complexity involved in direct integration and allows you to make quick calls to the APIs.**
+**Hydrogen Payment Gateway helps you process payments using cards and account transfers for faster delivery of goods and services on your PHP site.**    
+**It abstracts the complexity involved in direct integration and allows you to make quick calls to the APIs.**
 
 **This SDK communicates with Hydrogen API. You need to have a Hydrogen merchant account and Auth Key to use this SDK.**
 
@@ -49,7 +50,8 @@ composer require hydrogenpay/hydrogenpay-sdk:@dev
 
 ```
 
-**This command installs the package. The package can be found in the vendor folder.if you get an error message while running the command, ensure you have composer installed.**
+**This command installs the package. The package can be found in the vendor folder.**
+**if you get an error message while running the command, ensure you have composer installed.**
 
 
 **Initialization** 
@@ -353,7 +355,8 @@ if(isset($request['TransactionRef'])) {
 **Test**
 ==============
 
-*All of the SDK's tests are written with PHP's phpunit module*
+*All of the SDK's tests are written with PHP's phpunit module.*
+
 *Navigate to the SDK directory:*
 ```bash
 cd hydrogenpay/hydrogenpay-sdk
