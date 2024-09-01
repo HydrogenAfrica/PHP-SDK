@@ -5,11 +5,17 @@ use Dotenv\Dotenv;
 
 $hydrogenpay_installation = 'composer';
 
-if( !file_exists( '.env' )) {
-    $dotenv = Dotenv::createImmutable(__DIR__."/../../../"); # on the event that the package is install via composer.
+$dotenvPath = __DIR__ . "/../../../";
+if (file_exists($dotenvPath . '.env')) {
+    $dotenv = Dotenv::createImmutable($dotenvPath);
 } else {
-    $hydrogenpay_installation = "manual";
-    $dotenv = Dotenv::createImmutable(__DIR__); # on the event that the package is forked or donwload directly from Github.
+    $dotenvPath = __DIR__;
+    if (file_exists($dotenvPath . '/.env')) {
+        $dotenv = Dotenv::createImmutable($dotenvPath);
+    } else {
+        echo "Environment (.env) variable missing.";
+        exit; // This will prevent further execution
+    }
 }
 
 $dotenv->safeLoad();
