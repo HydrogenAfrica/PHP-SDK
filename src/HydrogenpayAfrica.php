@@ -251,7 +251,7 @@ class HydrogenpayAfrica extends AbstractPayment
 
         echo '<html lang="en">';
         echo '<body>';
-        echo '<script type="text/javascript" src="https://hydrogenshared.blob.core.windows.net/paymentgateway/paymentGatewayInegration.js"></script>';
+        echo '<script type="text/javascript" src="https://hydrogenshared.blob.core.windows.net/paymentgateway/paymentGatewayIntegration_v1PROD.js"></script>';
         echo '<script>';
         echo 'document.addEventListener("DOMContentLoaded", function(event) {';
         echo 'let obj = {
