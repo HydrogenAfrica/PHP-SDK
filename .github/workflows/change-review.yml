@@ -18,8 +18,8 @@ jobs:
 
     env:
       XDEBUG_MODE: coverage
-      LIVE_AUTH_TOKEN: ${{ secrets.LIVE_AUTH_TOKEN }}
-      TEST_AUTH_TOKEN: ${{ secrets.TEST_AUTH_TOKEN }}
+      LIVE_API_KEY: ${{ secrets.LIVE_API_KEY }}
+      SANDBOX: ${{ secrets.SANDBOX }}
       ENV: ${{ secrets.MODE }}
 
     steps:
@@ -50,8 +50,8 @@ jobs:
       - name: 'Create env file'
         run: |
           touch .env
-          echo LIVE_AUTH_TOKEN=${LIVE_AUTH_TOKEN} >> .env
-          echo TEST_AUTH_TOKEN=${TEST_AUTH_TOKEN} >> .env
+          echo LIVE_API_KEY=${LIVE_API_KEY} >> .env
+          echo SANDBOX=${SANDBOX} >> .env
           echo ENV=${MODE} >> .env
           ls -a ${{ github.workspace }}
 

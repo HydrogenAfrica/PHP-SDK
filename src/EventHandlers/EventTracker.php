@@ -34,7 +34,7 @@ trait EventTracker
         $url = 'https://kgelfdz7mf.execute-api.us-east-1.amazonaws.com/staging/sendevent';
 
         $data = [
-            'publicKey' => getenv('LIVE_AUTH_TOKEN'),
+            'publicKey' => getenv('LIVE_API_KEY'),
             'language' => 'PHP V3',
             'version' => '1.0.0',
             'title' => $title,

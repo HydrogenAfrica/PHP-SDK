@@ -271,7 +271,7 @@ class HydrogenpayAfrica extends AbstractPayment
     }';
 
         echo 'HydrogenpayCheckout({
-        live_auth_token: "' . self::$config->getPublicKey() . '",
+        live_api_key: "' . self::$config->getPublicKey() . '",
         amount: ' . $this->amount . ',
         currency: "' . $this->currency . '",
         country: "' . $this->country . '",
@@ -309,8 +309,8 @@ class HydrogenpayAfrica extends AbstractPayment
     public static function setUp(array $config): void
     {
         self::$config = ForkConfig::setUp(
-            $config['test_auth_token'],
-            $config['live_auth_token'],
+            $config['sandbox'],
+            $config['live_api_key'],
             $config['mode']
 
         );

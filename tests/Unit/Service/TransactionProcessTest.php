@@ -84,8 +84,8 @@ class TransactionProcessTest extends TestCase
                 [ "TransactionRef" => 'HY_TEST|' . random_int( 10, 2000) . '|' . uniqid('aMx') ],
                 new ModalEventHandler(),
                 ForkConfig::setUp(
-                    $_ENV['TEST_AUTH_TOKEN'],
-                    $_ENV['LIVE_AUTH_TOKEN'],
+                    $_ENV['SANDBOX'],
+                    $_ENV['LIVE_API_KEY'],
                     $_ENV['MODE']
                 ),
                 [
@@ -105,8 +105,8 @@ class TransactionProcessTest extends TestCase
                 [ "TransactionRef" => 'HY_TEST|' . random_int( 10, 2000) . '|' . uniqid('mAx') ],
                 new ModalEventHandler(),
                 ForkConfig::setUp(
-                    $_ENV['TEST_AUTH_TOKEN'],
-                    $_ENV['LIVE_AUTH_TOKEN'],
+                    $_ENV['SANDBOX'],
+                    $_ENV['LIVE_API_KEY'],
                     $_ENV['MODE']
                 ),
                 [

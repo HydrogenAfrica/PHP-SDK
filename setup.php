@@ -28,7 +28,7 @@ if(!Helper\CheckCompatibility::isCompatible())
 }
 
 // check for required key in ENV super global
-$hydrogenpayKeys = ["TEST_AUTH_TOKEN","LIVE_AUTH_TOKEN","MODE"];
+$hydrogenpayKeys = ["SANDBOX","LIVE_API_KEY","MODE"];
 
 asort($hydrogenpayKeys);
 
@@ -48,7 +48,7 @@ try{
 }
 
 $keys = [
-    'TEST_AUTH_TOKEN' => $_ENV['TEST_AUTH_TOKEN'],
-    'LIVE_AUTH_TOKEN' => $_ENV['LIVE_AUTH_TOKEN'],
+    'SANDBOX' => $_ENV['SANDBOX'],
+    'LIVE_API_KEY' => $_ENV['LIVE_API_KEY'],
     'MODE' => $_ENV['MODE'],
 ];

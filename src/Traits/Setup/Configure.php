@@ -17,16 +17,16 @@ trait Configure
 
             if ('composer' === $hydrogenpay_installation) {
                 $config = Config::setUp(
-                    $keys[Config::TEST_AUTH_TOKEN],
-                    $keys[Config::LIVE_AUTH_TOKEN],
+                    $keys[Config::SANDBOX],
+                    $keys[Config::LIVE_API_KEY],
                     $keys[Config::MODE]
                 );
             }
 
             if ('manual' === $hydrogenpay_installation) {
                 $config = ForkConfig::setUp(
-                    $keys[ForkConfig::TEST_AUTH_TOKEN],
-                    $keys[ForkConfig::LIVE_AUTH_TOKEN],
+                    $keys[ForkConfig::SANDBOX],
+                    $keys[ForkConfig::LIVE_API_KEY],
                     $keys[ForkConfig::MODE]
                 );
             }
