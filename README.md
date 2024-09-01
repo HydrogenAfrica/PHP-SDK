@@ -59,7 +59,7 @@ composer require hydrogenpay/hydrogenpay-sdk:@dev
 
 **After installation, create a .env file in the root of the project. Most frameworks (such as Laravel and Symfony support the use of .env files). if you are not using a framework you need to create one.**
 
-**Create a .env file and follow the format of the .env.example file.Save your, TEST\_AUTH\_TOKEN, LIVE\_AUTH\_TOKEN, MODE  in the .env fileYour .env file should look like the below:**
+**Create a .env file and follow the format of the .env.example file.Save your, SANDBOX, LIVE\_API\_KEY, MODE  in the .env fileYour .env file should look like the below:**
 
 ```env
 
@@ -133,7 +133,7 @@ try {
     "currency": "NGN",
     "description": "test desc",
     "meta": "test meta",
-    "callback": "https://hydrogenpay.com",
+    "callback": "https://docs.hydrogenpay.com/reference/payment-gateway",
   }
 ```
 
