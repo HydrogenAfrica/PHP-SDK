@@ -17,8 +17,8 @@ use HydrogenpayAfrica\Helper\EnvVariables;
 
 abstract class AbstractConfig
 {
-    public const LIVE_AUTH_TOKEN = 'LIVE_AUTH_TOKEN';
-    public const TEST_AUTH_TOKEN = 'TEST_AUTH_TOKEN';
+    public const LIVE_API_KEY = 'LIVE_API_KEY';
+    public const SANDBOX = 'SANDBOX';
     // public const ENCRYPTION_KEY = 'ENCRYPTION_KEY';
     public const MODE = 'MODE';
     public const DEFAULT_PREFIX = 'HY|PHP';
@@ -32,12 +32,11 @@ abstract class AbstractConfig
     private ClientInterface $http;
     // protected string $enc;
 
-    // protected function __construct(string $secret_key, string $live_auth_token, string $encrypt_key, string $env)
-    protected function __construct(string $test_auth_token, string $live_auth_token, string $mode)
+    protected function __construct(string $sandbox, string $live_api_key, string $mode)
 
     {
-        $this->secret = $test_auth_token;
-        $this->public = $live_auth_token;
+        $this->secret = $sandbox;
+        $this->public = $live_api_key;
         // $this->enc = $encrypt_key;
         $this->mode = $mode;
 

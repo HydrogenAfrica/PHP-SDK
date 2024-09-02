@@ -179,16 +179,16 @@ class Service implements ServiceInterface
 
             if ('composer' === $hydrogenpay_installation) {
                 $config = Config::setUp(
-                    $keys[Config::TEST_AUTH_TOKEN],
-                    $keys[Config::LIVE_AUTH_TOKEN],
+                    $keys[Config::SANDBOX],
+                    $keys[Config::LIVE_API_KEY],
                     $keys[Config::MODE]
                 );
             }
 
             if ('manual' === $hydrogenpay_installation) {
                 $config = ForkConfig::setUp(
-                    $keys[Config::TEST_AUTH_TOKEN],
-                    $keys[Config::LIVE_AUTH_TOKEN],
+                    $keys[Config::SANDBOX],
+                    $keys[Config::LIVE_API_KEY],
                     $keys[Config::MODE]
                 );
             }

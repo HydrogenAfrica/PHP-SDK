@@ -5,11 +5,17 @@ use Dotenv\Dotenv;
 
 $hydrogenpay_installation = 'composer';
 
-if( !file_exists( '.env' )) {
-    $dotenv = Dotenv::createImmutable(__DIR__."/../../../"); # on the event that the package is install via composer.
+$dotenvPath = __DIR__ . "/../../../";
+if (file_exists($dotenvPath . '.env')) {
+    $dotenv = Dotenv::createImmutable($dotenvPath);
 } else {
-    $hydrogenpay_installation = "manual";
-    $dotenv = Dotenv::createImmutable(__DIR__); # on the event that the package is forked or donwload directly from Github.
+    $dotenvPath = __DIR__;
+    if (file_exists($dotenvPath . '/.env')) {
+        $dotenv = Dotenv::createImmutable($dotenvPath);
+    } else {
+        echo "Environment (.env) variable missing.";
+        exit; // This will prevent further execution
+    }
 }
 
 $dotenv->safeLoad();
@@ -22,7 +28,7 @@ if(!Helper\CheckCompatibility::isCompatible())
 }
 
 // check for required key in ENV super global
-$hydrogenpayKeys = ["TEST_AUTH_TOKEN","LIVE_AUTH_TOKEN","MODE"];
+$hydrogenpayKeys = ["SANDBOX","LIVE_API_KEY","MODE"];
 
 asort($hydrogenpayKeys);
 
@@ -42,7 +48,7 @@ try{
 }
 
 $keys = [
-    'TEST_AUTH_TOKEN' => $_ENV['TEST_AUTH_TOKEN'],
-    'LIVE_AUTH_TOKEN' => $_ENV['LIVE_AUTH_TOKEN'],
+    'SANDBOX' => $_ENV['SANDBOX'],
+    'LIVE_API_KEY' => $_ENV['LIVE_API_KEY'],
     'MODE' => $_ENV['MODE'],
 ];

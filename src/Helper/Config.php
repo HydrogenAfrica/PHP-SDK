@@ -21,8 +21,8 @@ use function is_null;
  */
 class Config implements ConfigInterface
 {
-    public const LIVE_AUTH_TOKEN = 'LIVE_AUTH_TOKEN';
-    public const TEST_AUTH_TOKEN = 'TEST_AUTH_TOKEN';
+    public const LIVE_API_KEY = 'LIVE_API_KEY';
+    public const SANDBOX = 'SANDBOX';
     public const MODE = 'MODE';
     public const DEFAULT_PREFIX = 'HY|PHP';
     public const LOG_FILE_NAME = 'hydrogenpay-php.log';

@@ -10,8 +10,8 @@ final class TransactionHelper
      * Generate Payment Hash.
      *
      * @param array       $payload    the payload.
-     * @param string|null $test_auth_token the secret key.
-     * @param string|null $live_auth_token the secret key.
+     * @param string|null $sandbox the secret key.
+     * @param string|null $live_api_key the secret key.
      * 
 
      *
