@@ -244,45 +244,111 @@ class HydrogenpayAfrica extends AbstractPayment
         return $this;
     }
 
-
     public function initialize(): void
     {
+        $this->createCheckSum();
+
         $this->logger->info('Rendering Payment Modal..');
 
         echo '<html lang="en">';
         echo '<body>';
+        echo '<div style="display: flex; flex-direction: row;justify-content: center; align-content: center ">Proccessing...<img src="../assets/images/ajax-loader.gif"  alt="loading-gif"/></div>';
         echo '<script type="text/javascript" src="https://hydrogenshared.blob.core.windows.net/paymentgateway/paymentGatewayIntegration_v1PROD.js"></script>';
         echo '<script>';
         echo 'document.addEventListener("DOMContentLoaded", function(event) {';
         echo 'let obj = {
-        amount: ' . $this->amount . ',
-        email: "' . $this->email . '",
-        currency: "' . $this->currency . '",
-        description: "' . $this->description . '",
-        meta: "' . $this->customerName . '",
-        callback: "' . $this->callback . '",
-        isAPI: false,
-    };';
+            amount: ' . $this->amount . ',
+            email: "' . $this->customerEmail . '",
+            currency: "' . $this->currency . '",
+            description: "' . $this->customDescription . '",
+            meta: "' . $this->customTitle . '",
+            callback: "' . $this->redirectUrl . '",
+            isAPI: false,
+        };';
 
         echo 'let token = "' . self::$config->getPublicKey() . '";';
-        echo 'async function openDialogModal() {
-        let res = await handlePgData(obj, token);
-        console.log("return transaction ref", res);
-    }';
 
-        echo 'HydrogenpayCheckout({
-        live_api_key: "' . self::$config->getPublicKey() . '",
-        amount: ' . $this->amount . ',
-        currency: "' . $this->currency . '",
-        country: "' . $this->country . '",
-        callback:"' . $this->callback . '",
-        email: "' . $this->email . '",
-        customerName: "' . $this->customerName . '",
-        meta: "' . $this->customerName . '",
-        description: "' . $this->description . '",
-    });';
+        echo 'function onClose(e) {
+            var response = { event: "close", e };
+            window.parent.postMessage(JSON.stringify(response), "*");
+        }';
 
-        echo 'openDialogModal();'; // Trigger the openDialogModal function
+        echo 'function onSuccess(e) {
+            var response = { event: "success", e };
+            window.parent.postMessage(JSON.stringify(response), "*");
+        }';
+
+
+        echo 'async function openDialogModal(token) {
+            try {
+                // Start payment process and handle the response
+                let paymentResponse = await handlePgData(obj, token, onClose);
+                console.log("Return transaction ref:", paymentResponse);
+        
+                // Check the payment status periodically
+                let checkStatus = setInterval(async function() {
+                    try {
+                        const checkPaymentStatus = await handlePaymentStatus(paymentResponse, token);
+                        console.log("Return checkPaymentStatus:", checkPaymentStatus);
+                        // If the payment is successful, handle it and clear the interval
+                        if (checkPaymentStatus.status === "Paid") {
+                            onSuccess(checkPaymentStatus);
+                            console.log("Payment status:", checkPaymentStatus);
+                            console.log("Payment status:", checkPaymentStatus);
+                            clearInterval(checkStatus);
+                        }
+                    } catch (error) {
+                        console.error("Error while checking payment status:", error);
+                        clearInterval(checkStatus);
+                    }
+                }, 1000);
+                
+            } catch (error) {
+                console.error("Error during payment processing:", error);
+            }
+        }';
+        
+        echo 'HydrogenCheckout({
+            live_api_key: "' . self::$config->getPublicKey() . '",
+            amount: ' . $this->amount . ',
+            currency: "' . $this->currency . '",
+            country: "' . $this->country . '",
+            callback:"' . $this->redirectUrl . '",
+            email: "' . $this->customerEmail . '",
+            customerName: "' . $this->customerFirstname . ' ' . $this->customerLastname . '",
+            meta: "' . $this->customTitle . '",
+            description: "' . $this->customDescription . '",
+        });';
+
+        // echo 'openDialogModal();'; // Trigger the openDialogModal function
+        echo 'openDialogModal(token);'; // Trigger the openDialogModal function
+
+
+        echo 'window.addEventListener("message", function(event) {
+            var messageResponse = JSON.parse(event.data);
+            switch (messageResponse.event) {
+
+                case "success":
+                    console.log("Payment successful:", messageResponse.e);
+                    ' . $this->logger->notice('Requeryed a successful transaction....' . 'messageResponse.e') . ';
+                    if (isset($this->handler)) {
+                        $this->handler->onSuccessful(messageResponse.e);
+                    }
+                    break;
+
+                case "close":
+                    console.log("Payment closed:", messageResponse.e);
+                    ' . $this->logger->warning('Requeryed a failed transaction....' . 'messageResponse.e') . ';
+                    if (isset($this->handler)) {
+                        $this->handler->onFailure(messageResponse.e);
+                    }
+                    break;
+
+                default:
+                    console.log("Unknown event:", messageResponse);
+                    break;
+            }
+        }, false);';
 
         echo '});';
         echo '</script>';
