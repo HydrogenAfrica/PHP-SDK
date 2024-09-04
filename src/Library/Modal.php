@@ -93,73 +93,131 @@ final class Modal
         if ($this->type !== self::POPUP) {
             return $this->getUrl();
         }
-
+    
         $payload = $this->payload->toArray('modal');
         $currency = $payload['currency'];
-
+    
         $mode = self::$config->getMode();
         $secretKey = self::$config->getSecretKey();
         $publicKey = self::$config->getPublicKey();
         $testInlineScript = EnvVariables::TEST_INLINE_SCRIPT;
         $liveInlineScript = EnvVariables::LIVE_INLINE_SCRIPT;
-
-        $key = ($mode == 'test') ? $secretKey : $publicKey;
-        $hdrogenInlineScript = ($mode == 'test') ? $testInlineScript : $liveInlineScript;
+    
+        $key = ($mode === 'test') ? $secretKey : $publicKey;
+        $hdrogenInlineScript = ($mode === 'test') ? $testInlineScript : $liveInlineScript;
         $token = base64_encode($key);
-
-
+    
         $this->logger->info('Rendering Payment Modal..');
+        
         $html = '';
         $html .= '<!DOCTYPE html>';
-        $html .= '<html>';
+        $html .= '<html lang="en">';
         $html .= '<head>';
         $html .= '<meta name="viewport" content="width=device-width, initial-scale=1" />';
         $html .= '</head>';
         $html .= '<body>';
         $html .= '<script src="' . $hdrogenInlineScript . '"></script>';
         $html .= '<script>';
-        $html .= 'let obj = {';
+        $html .= 'let paymentObject = {';
         $html .= '"amount": "' . $payload['amount'] . '",';
         $html .= '"email": "' . $payload['email'] . '",';
         $html .= '"currency": "' . $currency . '",';
         $html .= '"description": "' . $payload['description'] . '",';
         $html .= '"meta": "' . $payload['meta'] . '",';
-        $html .= '"callback":"' . $payload['callback'] . '",';
-        $html .= '"customerName":"' . $payload['customerName'] . '",';
+        $html .= '"callback": "' . $payload['callback'] . '",';
+        $html .= '"customerName": "' . $payload['customerName'] . '",';
         $html .= '"isAPI": false,';
         $html .= '};';
         $html .= 'let token = atob("' . $token . '");';
-        $html .= 'async function openDialogModal() {';
+    
+        // Define onClose function
+        $html .= 'function onClose(e) {';
+        $html .= 'var response = { event: "close", e };';
+        $html .= 'window.parent.postMessage(JSON.stringify(response), "*");';
+        $html .= '}';
+    
+        // Define onSuccess function
+        $html .= 'function onSuccess(e) {';
+        $html .= 'var response = { event: "success", e };';
+        $html .= 'window.parent.postMessage(JSON.stringify(response), "*");';
+        $html .= '}';
+    
+        // Define openDialogModal function
+        $html .= 'async function openDialogModal(token) {';
         $html .= 'try {';
-        $html .= 'let res = await handlePgData(obj, token);';
-        $html .= 'console.log("return transaction ref", res);';
-        $html .= 'if (window.innerWidth > 768) {';
-        $html .= 'let a = document.getElementById("modal");';
-        $html .= 'a.style.height = "95%";';
-        $html .= 'let t = document.getElementById("myModal");';
-        $html .= 't.style.paddingTop = "1%";';
-        $html .= 't.style.paddingBottom = "0%";';
-        $html .= 't.style.zIndex = "9999";';
-        $html .= 'let n = document.querySelector(".pgIframe");';
-        $html .= 'n.style.width = "27rem";';
-        $html .= '} else {';
-        $html .= 'let a = document.getElementById("modal");';
-        $html .= 'a.style.height = "80%";';
-        $html .= 'a.style.zIndex = "9";';
-        $html .= 'a.style.marginTop = "40px";';
-        $html .= 'a.style.marginBottom = "40px";';
+        $html .= 'let paymentResponse = await handlePgData(paymentObject, token, onClose);';
+        $html .= 'console.log("Return transaction ref:", paymentResponse);';
+    
+        // Periodically check payment status
+        $html .= 'let checkStatus = setInterval(async function() {';
+        $html .= 'try {';
+        $html .= 'const checkPaymentStatus = await handlePaymentStatus(paymentResponse, token);';
+        $html .= 'console.log("Return checkPaymentStatus:", checkPaymentStatus);';
+    
+        // If the payment is successful, handle it and clear the interval
+        $html .= 'if (checkPaymentStatus.status === "Paid") {';
+        $html .= 'onSuccess(checkPaymentStatus);';
+        $html .= 'clearInterval(checkStatus);';
         $html .= '}';
         $html .= '} catch (error) {';
-        $html .= 'console.error("Error occurred:", error);';
+        $html .= 'console.error("Error while checking payment status:", error);';
+        $html .= 'clearInterval(checkStatus);';
+        $html .= '}';
+        $html .= '}, 1000);';
+        $html .= '} catch (error) {';
+        $html .= 'console.error("Error during payment processing:", error);';
         $html .= '}';
         $html .= '}';
-        $html .= 'openDialogModal();'; // Immediately open the modal
+    
+        // Trigger the openDialogModal function
+        $html .= 'openDialogModal(token);';
+    
+        // Event listener for message handling
+        $html .= 'window.addEventListener("message", function(event) {';
+        $html .= 'var messageResponse = JSON.parse(event.data);';
+        $html .= 'switch (messageResponse.event) {';
+
+         // Handle success case
+        $html .= 'case "success":';
+        $html .= 'console.log("Payment successful:", messageResponse.e);';
+        $html .= 'console.log("Payment successful TranRef:", messageResponse.e.transactionRef);';
+
+        $html .= 'var transactionRef = messageResponse.e.transactionRef;';
+        $html .= 'if (transactionRef) {';
+        $html .= 'var separator = window.parent.location.href.includes("?") ? "&" : "?";';
+        $html .= 'window.parent.location.href += separator + "TransactionRef=" + transactionRef;';
+        $html .= '}';
+        $html .= 'break;';
+
+        // Handle close case
+        $html .= 'case "close":';
+        $html .= 'console.log("Payment closed:", messageResponse.e);';
+        $this->logger->warning('Requeryed a failed transaction....');
+
+        $html .= 'var transactionRef = messageResponse.e;';
+        $html .= 'if (transactionRef) {';
+        $html .= 'var separator = window.parent.location.href.includes("?") ? "&" : "?";';
+        $html .= 'window.parent.location.href += separator + "TransactionRef=" + transactionRef;';
+        $html .= '}';
+        $html .= 'break;';
+    
+        // Default case
+        $html .= 'default:';
+        $html .= 'console.log("Unknown event:", messageResponse);';
+        $html .= 'break;';
+        $html .= '}';
+        $html .= '}, false);';
+    
         $html .= '</script>';
         $html .= '</body>';
         $html .= '</html>';
+        
         $this->logger->info('Rendered Payment Modal Successfully..');
         return $html;
     }
+
+
+    //
     public function getUrl()
     {
 
